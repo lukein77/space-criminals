@@ -1,5 +1,5 @@
-#ifndef _COMMON_HEADER_DEFINED_
-#define _COMMON_HEADER_DEFINED_
+#ifndef _COMMON_H_DEFINED_
+#define _COMMON_H_DEFINED_
 
 #include <stdlib.h>
 #include <stdio.h>

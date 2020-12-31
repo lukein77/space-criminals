@@ -6,6 +6,8 @@ void initSDL() {
     rendererFlags = SDL_RENDERER_ACCELERATED;
     windowFlags = 0;
 
+    App& app = App::instance();
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("Couldn't initialize SDL: %s\n", SDL_GetError());
         exit(1);
@@ -28,6 +30,8 @@ void initSDL() {
 
 void cleanup()
 {
+    App& app = App::instance();
+    
 	SDL_DestroyRenderer(app.getRenderer());
 	
 	SDL_DestroyWindow(app.getWindow());

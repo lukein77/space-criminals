@@ -2,8 +2,8 @@
 
 int main(int argc, char *argv[]) {
     
-    memset(&app, 0, sizeof(App));
-    memset(&player, 0, sizeof(Entity));
+    App& app = App::instance();
+    memset(&player, 0, sizeof(Player));
 
     initSDL();
 
@@ -17,21 +17,10 @@ int main(int argc, char *argv[]) {
         prepareScene();
         
         doInput();
+        
+        player.update();
 
-        if (app.up) {
-            player.setY(player.getY() - 4);
-        }
-        if (app.down) {
-            player.setY(player.getY() + 4);
-        }  
-        if (app.left) {
-            player.setX(player.getX() - 4);
-        }
-        if (app.right) {
-            player.setX(player.getX() + 4);
-        }
-
-        blit(player.getTexture(), player.getX(), player.getY());
+		blit(player.getTexture(), player.getX(), player.getY());
 
         presentScene();
 

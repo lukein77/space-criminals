@@ -21,7 +21,19 @@ void Entity::setPos(int x, int y) {
     this->y = y;
 }
 
+void Entity::setXSpeed(int dx) {
+    this->dx = dx;
+}
+
+void Entity::setYSpeed(int dy) {
+    this->dy = dy;
+}
+
 void Entity::setTexture(SDL_Texture *texture) {
     this-> texture = texture;
 }
 
+void Entity::update() {
+    x += dx;
+    y += dy;
+}
