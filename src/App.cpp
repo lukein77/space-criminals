@@ -13,3 +13,8 @@ bool App::setRenderer(SDL_Renderer *renderer) {
 void App::setKey(int key, bool value) {
     keyboard[key] = value;
 }
+
+void App::createStage() {
+    stage = new Stage();
+    stage->initStage();
+}

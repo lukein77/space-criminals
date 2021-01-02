@@ -33,7 +33,7 @@ void Entity::setTexture(SDL_Texture *texture) {
     this-> texture = texture;
 }
 
-void Entity::update() {
+void Entity::move() {
     x += dx;
     y += dy;
 }

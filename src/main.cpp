@@ -3,26 +3,26 @@
 int main(int argc, char *argv[]) {
     
     App& app = App::instance();
-    memset(&player, 0, sizeof(Player));
 
     initSDL();
 
-    player.setX(500);
-    player.setY(400);
-    player.setTexture(loadTexture("graphics/player.png"));
+    app.createStage();
+    app.getStage()->initStage();
+
+    Player *player = app.getStage()->getPlayer();
 
     atexit(cleanup);
 
     while (true) {
-        prepareScene();
+        draw::prepareScene();
         
         doInput();
         
-        player.update();
+        app.getStage()->updateEntities();
 
-		blit(player.getTexture(), player.getX(), player.getY());
+		draw::blit(player->getTexture(), player->getX(), player->getY());
 
-        presentScene();
+        draw::presentScene();
 
         SDL_Delay(16);
     }

@@ -1,7 +1,9 @@
 #include "Player.h"
 
-Player::Player() : Entity() {}
-
+Player::Player() : Entity() {
+    setTexture(draw::loadTexture("graphics/player.png"));
+    lives = 3;
+}
 void Player::update() {
     App& app = App::instance();
     
@@ -21,5 +23,5 @@ void Player::update() {
         setXSpeed(PLAYER_SPEED);
     }
 
-    Entity::update();
+    Entity::move();    
 }

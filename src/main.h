@@ -4,6 +4,7 @@
 #include "App.h"
 #include "Entity.h"
 #include "Player.h"
+#include "draw.h"
 
 extern void initSDL();
 extern void cleanup();
