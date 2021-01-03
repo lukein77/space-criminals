@@ -15,9 +15,35 @@ void Stage::initPlayer() {
     entities.push_back(player);
 }
 
+void Stage::addEntity(Entity *entity) {
+    entities.push_back(entity);
+}
+
+void Stage::removeEntity(Entity *entity) {
+    entities.remove(entity);
+    delete entity;
+}
+
 void Stage::updateEntities() {
+    std::list <Entity*> :: iterator it = entities.begin();
+    while (it != entities.end()) {
+        (*it)->update();
+        if (!(*it)->isAlive()) {
+            // if entity.health == 0, then remove entity
+            delete *it;
+            entities.erase(it++);
+        } else {
+            it++;
+        }
+    }
+    printf("entities: %ld\n", entities.size());
+}
+
+void Stage::drawEntities() {
     std::list <Entity*> :: iterator it;
     for (it = entities.begin(); it != entities.end(); it++) {
-        (*it)->update();
+        if ((*it)->isAlive()) {
+            draw::blit((*it)->getTexture(), (*it)->getX(), (*it)->getY());
+        }
     }
 }

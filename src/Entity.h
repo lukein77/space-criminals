@@ -11,6 +11,7 @@ Therefore, it has a position and a texture.
 class Entity {
     private:
         int x, y;
+        int w, h;
         int dx, dy;
         int health;
         SDL_Texture *texture;
@@ -23,6 +24,7 @@ class Entity {
         void setYSpeed(int dy);
         void setPos(int x, int y);
         void setTexture(SDL_Texture *texture);
+        void setHealth(int health);
         int getX() { return x; }
         int getY() { return y; }
         int getHealth() { return health; }

@@ -19,8 +19,7 @@ int main(int argc, char *argv[]) {
         doInput();
         
         app.getStage()->updateEntities();
-
-		draw::blit(player->getTexture(), player->getX(), player->getY());
+        app.getStage()->drawEntities();
 
         draw::presentScene();
 

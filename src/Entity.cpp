@@ -1,6 +1,10 @@
 #include "Entity.h"
 
-Entity::Entity() {}
+Entity::Entity() {
+    x = y = 0;
+    dx = dy = 0;
+    health = 1;
+}
 
 Entity::Entity(int x, int y, SDL_Texture *texture) {
     this->x = x;
@@ -30,7 +34,11 @@ void Entity::setYSpeed(int dy) {
 }
 
 void Entity::setTexture(SDL_Texture *texture) {
-    this-> texture = texture;
+    this->texture = texture;
+}
+
+void Entity::setHealth(int health) {
+    this->health = health;
 }
 
 void Entity::move() {
