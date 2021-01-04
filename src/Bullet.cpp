@@ -1,6 +1,7 @@
 #include "Bullet.h"
 
-Bullet::Bullet(int bulletType) : Entity() {
+Bullet::Bullet(int type) : Entity() {
+    bulletType = type;
     switch (bulletType) {
         case BULLETTYPE_PLAYER:
             setTexture(draw::loadTexture("graphics/b0.png"));

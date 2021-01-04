@@ -1,5 +1,9 @@
 #include "Stage.h"
 
+Stage::Stage() {
+    spawnTime = 0;
+}
+
 Stage::~Stage() {
     delete player;
 }
@@ -19,11 +23,6 @@ void Stage::addEntity(Entity *entity) {
     entities.push_back(entity);
 }
 
-void Stage::removeEntity(Entity *entity) {
-    entities.remove(entity);
-    delete entity;
-}
-
 void Stage::updateEntities() {
     std::list <Entity*> :: iterator it = entities.begin();
     while (it != entities.end()) {
@@ -36,7 +35,25 @@ void Stage::updateEntities() {
             it++;
         }
     }
-    printf("entities: %ld\n", entities.size());
+    
+    handleSpawn();
+}
+
+void Stage::handleSpawn() {
+    if (spawnTime < UINT32_MAX) {
+        spawnTime++;
+        if (spawnTime % 100 == 0) {
+            spawnEnemy(ENEMYTYPE_COMMON);
+        }
+    } else {
+        spawnTime = 0;
+    }
+}
+
+void Stage::spawnEnemy(int enemyType) {
+    Enemy *enemy = new Enemy(enemyType);
+    enemy->setPos(rand() % SCREEN_WIDTH, -30);
+    addEntity(enemy);
 }
 
 void Stage::drawEntities() {

@@ -41,6 +41,10 @@ void Entity::setHealth(int health) {
     this->health = health;
 }
 
+void Entity::takeDamage(int damage) {
+    health = (health > damage) ? health -= damage : 0;
+} 
+
 void Entity::move() {
     x += dx;
     y += dy;

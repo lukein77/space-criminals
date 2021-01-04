@@ -9,7 +9,7 @@ class Bullet : public Entity {
     private:
         int bulletType;
     public:
-        Bullet(int bulletType);
+        Bullet(int type);
         ~Bullet();
         void update();
 };

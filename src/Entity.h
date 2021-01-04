@@ -25,6 +25,7 @@ class Entity {
         void setPos(int x, int y);
         void setTexture(SDL_Texture *texture);
         void setHealth(int health);
+        void takeDamage(int damage);
         int getX() { return x; }
         int getY() { return y; }
         int getHealth() { return health; }
