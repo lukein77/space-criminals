@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "App.h"
+#include "Player.h"
 
 void doInput();
 void doKeyDown(SDL_KeyboardEvent *event);

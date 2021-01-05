@@ -6,7 +6,7 @@
 
 #define MAX_KEYBOARD_KEYS 350
 
-#define PLAYER_SPEED 5
+#define PLAYER_SPEED 6
 #define PLAYER_RELOAD_SPEED 10
 
 #define ENEMY_SPEED_COMMON 3
@@ -23,6 +23,13 @@ enum {
 enum {
     ENEMYTYPE_COMMON,
     ENEMYTYPE_DIAGONAL
+};
+
+enum {
+    DIRECTION_UP = 0,
+    DIRECTION_DOWN,
+    DIRECTION_LEFT,
+    DIRECTION_RIGHT
 };
 
 #endif

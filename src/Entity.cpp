@@ -2,7 +2,10 @@
 
 Entity::Entity() {
     x = y = 0;
-    dx = dy = 0;
+    for (int i = 0; i < 4; i++) {
+        direction[i] = false;
+    }
+    speed = 0;
     health = 1;
 }
 
@@ -25,12 +28,12 @@ void Entity::setPos(int x, int y) {
     this->y = y;
 }
 
-void Entity::setXSpeed(int dx) {
-    this->dx = dx;
+void Entity::setMovement(int direction, bool value) {
+    this->direction[direction] = value;
 }
 
-void Entity::setYSpeed(int dy) {
-    this->dy = dy;
+void Entity::setSpeed(int speed) {
+    this->speed = speed;
 }
 
 void Entity::setTexture(SDL_Texture *texture) {
@@ -46,6 +49,34 @@ void Entity::takeDamage(int damage) {
 } 
 
 void Entity::move() {
-    x += dx;
-    y += dy;
+
+    struct { int x, y; } dir;
+    dir.x = 0;
+    dir.y = 0;
+
+    if (direction[DIRECTION_UP]) {
+        dir.y = -1;
+    }
+    if (direction[DIRECTION_DOWN]) {
+        dir.y = 1;
+    }
+    if (direction[DIRECTION_LEFT]) {
+        dir.x = -1;
+    }
+    if (direction[DIRECTION_RIGHT]) {
+        dir.x = 1;
+    }
+
+    float dx, dy;
+    double n;
+
+    n = sqrt(pow(dir.x, 2) + pow(dir.y, 2));
+
+    if (n != 0) {    
+        dx = dir.x / n;
+        dy = dir.y / n;
+
+        x += dx * speed;
+        y += dy * speed;
+    }
 }

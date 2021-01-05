@@ -6,11 +6,13 @@ Enemy::Enemy(int type) : Entity() {
     switch (enemyType) {
         case ENEMYTYPE_COMMON:
             setTexture(draw::loadTexture("graphics/enemy.png"));
-            setYSpeed(ENEMY_SPEED_COMMON);
+            setSpeed(ENEMY_SPEED_COMMON);
+            setMovement(DIRECTION_DOWN, true);
             setHealth(10);
             break;
         case ENEMYTYPE_DIAGONAL:
             setTexture(draw::loadTexture("graphics/enemy2.png"));
+            setSpeed(ENEMY_SPEED_COMMON);
             setHealth(20);
             break;
     }

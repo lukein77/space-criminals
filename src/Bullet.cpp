@@ -5,11 +5,13 @@ Bullet::Bullet(int type) : Entity() {
     switch (bulletType) {
         case BULLETTYPE_PLAYER:
             setTexture(draw::loadTexture("graphics/b0.png"));
-            setYSpeed(-BULLETSPEED_PLAYER);
+            setSpeed(BULLETSPEED_PLAYER);
+            setMovement(DIRECTION_UP, true);
             break;
         default:
             setTexture(draw::loadTexture("graphics/b1.png"));
-            setYSpeed(BULLETSPEED_ENEMY);
+            setSpeed(BULLETSPEED_ENEMY);
+            setMovement(DIRECTION_DOWN, true);
             break;
     }
 }

@@ -2,6 +2,7 @@
 
 Player::Player() : Entity() {
     setTexture(draw::loadTexture("graphics/player.png"));
+    setSpeed(PLAYER_SPEED);
     lives = 3;
 }
 
@@ -9,25 +10,6 @@ Player::~Player() {}
 
 void Player::update() {
     App& app = App::instance();
-    
-    setXSpeed(0);
-    setYSpeed(0);
-
-    if (app.getKey(SDL_SCANCODE_UP)) {
-        setYSpeed(-PLAYER_SPEED);
-    }
-    if (app.getKey(SDL_SCANCODE_DOWN)) {
-        setYSpeed(PLAYER_SPEED);
-    }  
-    if (app.getKey(SDL_SCANCODE_LEFT)) {
-        setXSpeed(-PLAYER_SPEED);
-    }
-    if (app.getKey(SDL_SCANCODE_RIGHT)) {
-        setXSpeed(PLAYER_SPEED);
-    }
-    if ((app.getKey(SDL_SCANCODE_LCTRL)) || (app.getKey(SDL_SCANCODE_RCTRL))) {
-        toggleFire();
-    }
 
     if (shooting) {
         if (reload == 0) {

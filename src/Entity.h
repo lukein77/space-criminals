@@ -10,9 +10,10 @@ Therefore, it has a position and a texture.
 
 class Entity {
     private:
-        int x, y;
+        float x, y;
         int w, h;
-        int dx, dy;
+        bool direction[4];
+        int speed;
         int health;
         SDL_Texture *texture;
     public:
@@ -20,8 +21,10 @@ class Entity {
         Entity(int x, int y, SDL_Texture *texture);
         void setX(int x);
         void setY(int y);
-        void setXSpeed(int dx);
-        void setYSpeed(int dy);
+
+        void setMovement(int direction, bool value);
+        void setSpeed(int speed);
+        
         void setPos(int x, int y);
         void setTexture(SDL_Texture *texture);
         void setHealth(int health);
