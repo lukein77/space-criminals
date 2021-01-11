@@ -10,22 +10,23 @@ void draw::presentScene() {
 	SDL_RenderPresent(App::instance().getRenderer());
 }
 
-SDL_Texture *draw::loadTexture(const char *filename) {
-	SDL_Texture *texture;
+Texture *draw::loadTexture(const char *filename) {
+	Texture *texture = new Texture;
 
-	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", filename);
+	//SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", filename);
 
-	texture = IMG_LoadTexture(App::instance().getRenderer(), filename);
-
+	// load SDL_Texture
+	texture->image = IMG_LoadTexture(App::instance().getRenderer(), filename);
+	// get image width and height and store it in SDL_Rect
+	SDL_QueryTexture(texture->image, NULL, NULL, &(texture->rect.w), &(texture->rect.h));
+	
 	return texture;
 }
 
-void draw::blit(SDL_Texture *texture, int x, int y) {
-	SDL_Rect dest;
+void draw::blit(Texture *texture, int x, int y) {
 	
-	dest.x = x;
-	dest.y = y;
-	SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
+	texture->rect.x = x;
+	texture->rect.y = y;
 	
-	SDL_RenderCopy(App::instance().getRenderer(), texture, NULL, &dest);
+	SDL_RenderCopy(App::instance().getRenderer(), texture->image, NULL, &(texture->rect));
 }

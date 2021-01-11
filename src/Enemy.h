@@ -2,6 +2,7 @@
 #define _ENEMY_H_INCLUDED_
 
 #include "Entity.h"
+#include "App.h"
 
 class Enemy : public Entity {
     private:

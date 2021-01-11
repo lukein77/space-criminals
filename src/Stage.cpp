@@ -23,6 +23,14 @@ void Stage::addEntity(Entity *entity) {
     entities.push_back(entity);
 }
 
+void Stage::removeEnemy(Enemy *enemy) {
+    enemies.remove(enemy);
+}
+
+const std::list <Enemy*> &Stage::getEnemies() {
+    return enemies;
+}
+
 void Stage::updateEntities() {
     std::list <Entity*> :: iterator it = entities.begin();
     while (it != entities.end()) {
@@ -52,8 +60,9 @@ void Stage::handleSpawn() {
 
 void Stage::spawnEnemy(int enemyType) {
     Enemy *enemy = new Enemy(enemyType);
-    enemy->setPos(rand() % SCREEN_WIDTH, -30);
+    enemy->setPos(rand() % (SCREEN_WIDTH - enemy->getW()), -enemy->getH());
     addEntity(enemy);
+    enemies.push_back(enemy);
 }
 
 void Stage::drawEntities() {

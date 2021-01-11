@@ -19,8 +19,31 @@ Bullet::Bullet(int type) : Entity() {
 Bullet::~Bullet() {}
 
 void Bullet::update() {
-    Entity::move();
-    if (getY() < 0) {
-        setHealth(0);
+    std::list <Enemy*> enemies = App::instance().getStage()->getEnemies();
+    std::list <Enemy*> :: iterator it;
+
+    SDL_Rect myRect = getTexture()->rect;
+
+    Enemy *enemy = nullptr;
+
+    for (it = enemies.begin(); it != enemies.end(); it++) {
+        if ((*it)->isAlive()) {
+            SDL_Rect enemyRect = (*it)->getTexture()->rect;
+            if (Entity::checkCollision(&myRect, &enemyRect)) {
+                enemy = *it;
+                break;
+            }
+        }
     }
+
+    if (!enemy) {
+        Entity::move();
+        if (getY() < 0) {
+            setHealth(0);
+        }
+    } else {
+        setHealth(0);
+        enemy->takeDamage(10);
+    }
+
 }

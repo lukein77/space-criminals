@@ -16,6 +16,7 @@ class Enemy;
 class Stage {
     private:
         std::list <Entity*> entities;
+        std::list <Enemy*> enemies;
         Player *player;
         Uint32 spawnTime;
     public:
@@ -24,6 +25,8 @@ class Stage {
         void initStage();
         void initPlayer();
         void addEntity(Entity *entity);
+        const std::list <Enemy*> &getEnemies();
+        void removeEnemy(Enemy *enemy);
         void updateEntities();
         void drawEntities();
         void handleSpawn();

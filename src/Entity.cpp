@@ -9,10 +9,10 @@ Entity::Entity() {
     health = 1;
 }
 
-Entity::Entity(int x, int y, SDL_Texture *texture) {
+Entity::Entity(int x, int y, Texture *texture) {
     this->x = x;
     this->y = y;
-    this->texture = texture;
+    this->texture = *texture;
 }
 
 void Entity::setX(int x) {
@@ -36,8 +36,8 @@ void Entity::setSpeed(int speed) {
     this->speed = speed;
 }
 
-void Entity::setTexture(SDL_Texture *texture) {
-    this->texture = texture;
+void Entity::setTexture(Texture *texture) {
+    this->texture = *texture;
 }
 
 void Entity::setHealth(int health) {
@@ -45,7 +45,7 @@ void Entity::setHealth(int health) {
 }
 
 void Entity::takeDamage(int damage) {
-    health = (health > damage) ? health -= damage : 0;
+    health = (health > damage) ? health - damage : 0;
 } 
 
 void Entity::move() {
@@ -78,5 +78,28 @@ void Entity::move() {
 
         x += dx * speed;
         y += dy * speed;
+    }
+}
+
+void Entity::checkBoundaries() {
+    if (x < 0) {
+        x = 0;
+    }
+    if (x > SCREEN_WIDTH - texture.rect.w) {
+        x = SCREEN_WIDTH - texture.rect.w;
+    }
+    if (y < 0) {
+        y = 0;
+    }
+    if (y > SCREEN_HEIGHT - texture.rect.h) {
+        y = SCREEN_HEIGHT - texture.rect.h;
+    }
+}
+
+bool Entity::checkCollision(SDL_Rect *a, SDL_Rect *b) {
+    if (SDL_HasIntersection(a, b) == SDL_TRUE) {
+        return true;
+    } else {
+        return false;
     }
 }

@@ -23,7 +23,18 @@ Enemy::~Enemy() {}
 void Enemy::update() {
     Entity::move();
 
-    if (getY() > SCREEN_HEIGHT + 30) {
+    SDL_Rect *playerRect = &(App::instance().getStage()->getPlayer()->getTexture()->rect);
+    SDL_Rect *myRect = &(getTexture()->rect);
+
+    /*if (Entity::checkCollision(myRect, playerRect)) {
+        printf("collision\n");
+    }*/
+
+    if (getY() > SCREEN_HEIGHT + getH()) {
         setHealth(0);
+    }
+
+    if (!isAlive()) {
+        App::instance().getStage()->removeEnemy(this);
     }
 }

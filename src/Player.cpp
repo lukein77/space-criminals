@@ -4,6 +4,7 @@ Player::Player() : Entity() {
     setTexture(draw::loadTexture("graphics/player.png"));
     setSpeed(PLAYER_SPEED);
     lives = 3;
+    shooting = false;
 }
 
 Player::~Player() {}
@@ -21,6 +22,7 @@ void Player::update() {
     }
 
     Entity::move();    
+    Entity::checkBoundaries();
 }
 
 void Player::toggleFire() {
@@ -30,7 +32,7 @@ void Player::toggleFire() {
 
 void Player::shoot() {
     Bullet *bullet = new Bullet(BULLETTYPE_PLAYER);
-    bullet->setPos(this->getX() + 16, this->getY());
+    bullet->setPos(this->getX() + this->getW() / 2 - bullet->getW() / 2, this->getY());
     reload = PLAYER_RELOAD_SPEED;
     App::instance().getStage()->addEntity(bullet);
 }

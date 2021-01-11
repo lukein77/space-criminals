@@ -32,4 +32,9 @@ enum {
     DIRECTION_RIGHT
 };
 
+typedef struct {
+    SDL_Texture *image;
+    SDL_Rect rect;
+} Texture;
+
 #endif
