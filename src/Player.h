@@ -11,10 +11,14 @@ class Player : public Entity {
         int lives;
         bool shooting;
         int reload;
+        bool direction[4];
     public:
         Player();
         ~Player();
         void update();
+        void move();
+        void checkBoundaries();
+        void setMovement(int direction, bool value);
         void shoot();
         void toggleFire();
 };

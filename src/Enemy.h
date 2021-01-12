@@ -7,10 +7,12 @@
 class Enemy : public Entity {
     private:
         int enemyType;
+        int reload;
     public:
         Enemy(int type);
         ~Enemy();
         void update();
+        void move();
         void shoot();
 };
 

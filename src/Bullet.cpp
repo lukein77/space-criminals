@@ -6,44 +6,82 @@ Bullet::Bullet(int type) : Entity() {
         case BULLETTYPE_PLAYER:
             setTexture(draw::loadTexture("graphics/b0.png"));
             setSpeed(BULLETSPEED_PLAYER);
-            setMovement(DIRECTION_UP, true);
             break;
         default:
             setTexture(draw::loadTexture("graphics/b1.png"));
             setSpeed(BULLETSPEED_ENEMY);
-            setMovement(DIRECTION_DOWN, true);
             break;
     }
 }
 
 Bullet::~Bullet() {}
 
+void Bullet::setTrajectory() {
+    if (bulletType == BULLETTYPE_PLAYER) {
+        dx = 0;
+        dy = -1;
+    } else if (bulletType == BULLETTYPE_ENEMY_COMMON) {
+        dx = 0;
+        dy = 1;
+    } else if (bulletType == BULLETTYPE_ENEMY_FOLLOW) {
+        Player *player = App::instance().getStage()->getPlayer();
+        dx = (player->getX() + player->getW() / 2) - getX();
+        dy = (player->getY() + player->getH() / 2) - getY();
+        float n = sqrt(pow(dx, 2) + pow(dy, 2));
+        dx = dx / n;
+        dy = dy / n;
+    }
+}
+
 void Bullet::update() {
-    std::list <Enemy*> enemies = App::instance().getStage()->getEnemies();
-    std::list <Enemy*> :: iterator it;
 
-    SDL_Rect myRect = getTexture()->rect;
+    if (bulletType == BULLETTYPE_PLAYER) {
+        // first check for collisions with enemies
 
-    Enemy *enemy = nullptr;
+        std::list <Enemy*> enemies = App::instance().getStage()->getEnemies();
+        std::list <Enemy*> :: iterator it;
 
-    for (it = enemies.begin(); it != enemies.end(); it++) {
-        if ((*it)->isAlive()) {
-            SDL_Rect enemyRect = (*it)->getTexture()->rect;
-            if (Entity::checkCollision(&myRect, &enemyRect)) {
-                enemy = *it;
-                break;
+        SDL_Rect myRect = getTexture()->rect;
+
+        Enemy *enemy = nullptr;
+
+        for (it = enemies.begin(); it != enemies.end(); it++) {
+            if ((*it)->isAlive()) {
+                SDL_Rect enemyRect = (*it)->getTexture()->rect;
+                if (Entity::checkCollision(&myRect, &enemyRect)) {
+                    enemy = *it;
+                    break;
+                }
             }
         }
-    }
 
-    if (!enemy) {
-        Entity::move();
-        if (getY() < 0) {
+        // if there are no collisions, move
+        if (!enemy) {
+            move();
+            if (getY() < 0) {
+                setHealth(0);
+            }
+        } else {
             setHealth(0);
+            enemy->takeDamage(10);
         }
     } else {
-        setHealth(0);
-        enemy->takeDamage(10);
-    }
+        // enemy bullets
+        // check collision with player
 
+        Player *player = App::instance().getStage()->getPlayer();
+
+        if (!Entity::checkCollision(&getTexture()->rect, &player->getTexture()->rect)) {
+            move();
+        } else {
+            setHealth(0);
+            player->takeDamage(5);
+            printf("player health: %d\n", player->getHealth());
+        }
+    }
+}
+
+void Bullet::move() {
+    if (dx != 0) setX(getX() + dx * getSpeed());
+    setY(getY() + dy * getSpeed());
 }

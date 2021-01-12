@@ -10,10 +10,13 @@
 class Bullet : public Entity {
     private:
         int bulletType;
+        float dx, dy;
     public:
         Bullet(int type);
         ~Bullet();
+        void setTrajectory();
         void update();
+        void move();
 };
 
 #endif
