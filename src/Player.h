@@ -9,6 +9,7 @@
 class Player : public Entity {
     private:
         int lives;
+        unsigned int score;
         bool shooting;
         int reload;
         bool direction[4];
@@ -21,6 +22,8 @@ class Player : public Entity {
         void setMovement(int direction, bool value);
         void shoot();
         void toggleFire();
+        void addScore(unsigned int score);
+        unsigned int getScore() { return score; }
 };
 
 #endif

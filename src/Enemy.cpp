@@ -8,6 +8,7 @@ Enemy::Enemy(int type) : Entity() {
         case ENEMYTYPE_COMMON:
             setTexture(draw::loadTexture("graphics/enemy.png"));
             setSpeed(ENEMY_SPEED_COMMON);
+            setScore(100);
             setHealth(10);
             break;
         case ENEMYTYPE_DIAGONAL:
@@ -60,4 +61,8 @@ void Enemy::shoot() {
     bullet->setTrajectory();
     reload = rand() % 100 + 100;
     App::instance().getStage()->addEntity(bullet);
+}
+
+void Enemy::setScore(unsigned int score) {
+    this->score = score;
 }

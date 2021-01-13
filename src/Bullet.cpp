@@ -63,7 +63,11 @@ void Bullet::update() {
             }
         } else {
             setHealth(0);
-            enemy->takeDamage(10);
+            enemy->takeDamage(PLAYER_DAMAGE);
+            if (!enemy->isAlive()) {
+                App::instance().getStage()->getPlayer()->addScore(enemy->getScore());
+                printf("score: %d\n", App::instance().getStage()->getPlayer()->getScore());
+            }
         }
     } else {
         // enemy bullets
@@ -76,7 +80,6 @@ void Bullet::update() {
         } else {
             setHealth(0);
             player->takeDamage(5);
-            printf("player health: %d\n", player->getHealth());
         }
     }
 }

@@ -8,6 +8,7 @@
 
 #define PLAYER_SPEED 6
 #define PLAYER_RELOAD_SPEED 10
+#define PLAYER_DAMAGE 10
 
 #define ENEMY_SPEED_COMMON 3
 

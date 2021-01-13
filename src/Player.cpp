@@ -8,6 +8,7 @@ Player::Player() : Entity() {
         direction[i] = false;
     }
     lives = 3;
+    score = 0;
     shooting = false;
 }
 
@@ -97,4 +98,8 @@ void Player::shoot() {
     bullet->setTrajectory();
     reload = PLAYER_RELOAD_SPEED;
     App::instance().getStage()->addEntity(bullet);
+}
+
+void Player::addScore(unsigned int score) {
+    this->score += score;
 }
