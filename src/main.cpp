@@ -14,14 +14,14 @@ int main(int argc, char *argv[]) {
     atexit(cleanup);
 
     while (true) {
-        draw::prepareScene();
+        app.getDrawingManager()->prepareScene();
         
         doInput();
         
         app.getStage()->updateEntities();
         app.getStage()->drawEntities();
 
-        draw::presentScene();
+        app.getDrawingManager()->presentScene();
 
         SDL_Delay(16);
     }

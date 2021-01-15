@@ -5,7 +5,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "draw.h"
+#include "Draw.h"
 #include <list>
 #include <iterator>
 

@@ -3,17 +3,18 @@
 
 #include "common.h"
 #include "Stage.h"
+#include "Draw.h"
 
 class Stage;
+class Draw;
 
 class App {
     private:
-        SDL_Renderer *renderer;
-        SDL_Window *window;
         bool keyboard[MAX_KEYBOARD_KEYS];
         Stage *stage;
+        Draw *drawingManager;
 
-        App() {}
+        App();
     public:
         static App& instance() {
             static App *instance_ = new App();
@@ -21,14 +22,11 @@ class App {
         }
 
         void createStage();
-        bool setRenderer(SDL_Renderer *renderer);
-        bool setWindow(SDL_Window *window);
         void setKey(int key, bool value);
 
-        SDL_Renderer *getRenderer() { return renderer; }
-        SDL_Window *getWindow() { return window; }
         bool getKey(int key) { return keyboard[key]; }
         Stage *getStage() { return stage; }
+        Draw *getDrawingManager() { return drawingManager; }
 };
 
 #endif

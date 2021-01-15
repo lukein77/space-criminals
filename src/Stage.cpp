@@ -69,7 +69,7 @@ void Stage::drawEntities() {
     std::list <Entity*> :: iterator it;
     for (it = entities.begin(); it != entities.end(); it++) {
         if ((*it)->isAlive()) {
-            draw::blit((*it)->getTexture(), (*it)->getX(), (*it)->getY());
+            App::instance().getDrawingManager()->blit((*it)->getTexture(), (*it)->getX(), (*it)->getY());
         }
     }
 }

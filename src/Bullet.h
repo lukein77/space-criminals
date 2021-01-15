@@ -5,7 +5,7 @@
 #include "App.h"
 #include "Entity.h"
 #include "Enemy.h"
-#include "draw.h"
+#include "Draw.h"
 
 class Bullet : public Entity {
     private:
