@@ -10,12 +10,14 @@ class Draw;
 
 class App {
     private:
-        bool keyboard[MAX_KEYBOARD_KEYS];
+        int state;
         Stage *stage;
         Draw *drawingManager;
 
         App();
         ~App();
+        void doKeyDown(SDL_KeyboardEvent *event);
+        void doKeyUp(SDL_KeyboardEvent *event);
     public:
         static App& instance() {
             static App *instance_ = new App();
@@ -24,11 +26,14 @@ class App {
 
         bool initSDL();
         void createStage();
-        void setKey(int key, bool value);
+        
+        void doInput();
 
-        bool getKey(int key) { return keyboard[key]; }
         Stage *getStage() { return stage; }
         Draw *getDrawingManager() { return drawingManager; }
+
+        void setState(int state);
+        int getState() { return state; }
 };
 
 #endif

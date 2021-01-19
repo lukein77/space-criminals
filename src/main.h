@@ -6,6 +6,4 @@
 #include "Player.h"
 #include "Draw.h"
 
-extern void doInput();
-
 #endif
