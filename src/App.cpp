@@ -1,13 +1,23 @@
 #include "App.h"
 
-bool App::setWindow(SDL_Window *window) {
-    this->window = window;
-    return this->window != nullptr;
+App::App() {}
+
+App::~App() {
+    SDL_Quit();
 }
 
-bool App::setRenderer(SDL_Renderer *renderer) {
-    this->renderer = renderer;
-    return this->renderer != nullptr;
+bool App::initSDL() {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("Couldn't initialize SDL: %s\n", SDL_GetError());
+        return false;
+    }
+
+    drawingManager = new Draw();
+    if (!drawingManager->initialize()) {
+        return false;
+    }
+
+    return true;
 }
 
 void App::setKey(int key, bool value) {

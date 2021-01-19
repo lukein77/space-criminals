@@ -1,18 +1,18 @@
 #include "Enemy.h"
-#include "draw.h"
+#include "Draw.h"
 
 Enemy::Enemy(int type) : Entity() {
     enemyType = type;
     reload = 100;
     switch (enemyType) {
         case ENEMYTYPE_COMMON:
-            setTexture(draw::loadTexture("graphics/enemy.png"));
+            setTexture(App::instance().getDrawingManager()->loadTexture("graphics/enemy.png"));
             setSpeed(ENEMY_SPEED_COMMON);
             setScore(100);
             setHealth(10);
             break;
         case ENEMYTYPE_DIAGONAL:
-            setTexture(draw::loadTexture("graphics/enemy2.png"));
+            setTexture(App::instance().getDrawingManager()->loadTexture("graphics/enemy2.png"));
             setSpeed(ENEMY_SPEED_COMMON);
             setHealth(20);
             break;

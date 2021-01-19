@@ -3,8 +3,8 @@
 
 #include "Entity.h"
 #include "Bullet.h"
-#include "draw.h"
-
+#include "Draw.h"
+#include "App.h"
 
 class Player : public Entity {
     private:

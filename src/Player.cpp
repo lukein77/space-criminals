@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player() : Entity() {
-    setTexture(draw::loadTexture("graphics/player.png"));
+    setTexture(App::instance().getDrawingManager()->loadTexture("graphics/player.png"));
     setHealth(100);
     setSpeed(PLAYER_SPEED);
     for (int i = 0; i < 4; i++) {
