@@ -4,7 +4,9 @@ int main(int argc, char *argv[]) {
     
     App& app = App::instance();
 
-    initSDL();
+    if (!app.initSDL()) {
+        exit(1);
+    }
 
     app.createStage();
     app.getStage()->initStage();
@@ -22,8 +24,6 @@ int main(int argc, char *argv[]) {
         app.getStage()->drawEntities();
 
         app.getDrawingManager()->presentScene();
-
-        SDL_Delay(16);
     }
 
     return 0;

@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "App.h"
+#include <map>
 
 typedef struct {
     std::string filename;
@@ -14,18 +15,14 @@ class Draw {
         SDL_Renderer *renderer;
         SDL_Window *window;
         
-        cacheNode textureCacheTable[TEXTURE_CACHE_SIZE];
-        SDL_Texture *textureCache[TEXTURE_CACHE_SIZE];
-        int cacheSize;
-        int cachePointer;
-        void removeFromCache(int index);
-        int searchTexture(const char *filename);
-        void addCacheIndex(const char *filename, int index);
-        SDL_Texture *addTextureToCache(const char *filename);
-        SDL_Texture *getTextureFromCache(int index) { return textureCache[index]; }
+        std::map <std::string, SDL_Texture*> textureCache;
+
+        void clearTextureCache();
+        SDL_Texture *addTextureToCache(std::string filename);
     public:
         Draw();
         ~Draw();
+        bool initialize();
         bool setRenderer(SDL_Renderer *renderer);
         bool setWindow(SDL_Window *window);
         SDL_Renderer *getRenderer() { return renderer; }

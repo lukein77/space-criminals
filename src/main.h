@@ -6,12 +6,6 @@
 #include "Player.h"
 #include "Draw.h"
 
-extern void initSDL();
-extern void cleanup();
-
 extern void doInput();
-
-Player player;
-Entity bullet;
 
 #endif

@@ -15,12 +15,14 @@ class App {
         Draw *drawingManager;
 
         App();
+        ~App();
     public:
         static App& instance() {
             static App *instance_ = new App();
             return *instance_;
         }
 
+        bool initSDL();
         void createStage();
         void setKey(int key, bool value);
 

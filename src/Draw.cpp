@@ -1,10 +1,33 @@
 #include "Draw.h"
 
 Draw::Draw() {
-	cacheSize = cachePointer = 0;
+	textureCache.clear();
 }
 
-Draw::~Draw() {}
+Draw::~Draw() {
+	clearTextureCache();
+
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+}
+
+bool Draw::initialize() {
+	if (!setWindow(SDL_CreateWindow("SPACE CRIMINALS", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN))) {
+        printf("Failed to open window: %s\n", SDL_GetError());
+        return false;
+    }
+
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+
+    if (!setRenderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC))) {
+        printf("Failed to create renderer: %s\n", SDL_GetError());
+        return false;
+    }
+
+    IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
+
+	return true;
+}
 
 bool Draw::setWindow(SDL_Window *window) {
     this->window = window;
@@ -25,80 +48,41 @@ void Draw::presentScene() {
 	SDL_RenderPresent(renderer);
 }
 
-void Draw::addCacheIndex(const char *filename, int index) {
-	cacheNode node;
-	node.filename.assign(filename);
-	node.index = index;
-	
-	int i = 0;
-	while ((i < cacheSize) && (textureCacheTable[i].filename < node.filename)) {
-		i++;
+void Draw::clearTextureCache() {
+	std::map <std::string, SDL_Texture*> :: iterator it;
+	for (it = textureCache.begin(); it != textureCache.end(); it++) {
+		SDL_DestroyTexture(it->second);
 	}
-	for (int j = cacheSize - 1; j >= i; j--) { 
-		textureCacheTable[j+1] = textureCacheTable[j]; 
-	}
-	textureCacheTable[i] = node;
+	textureCache.clear();
 }
 
-void Draw::removeFromCache(int index) {
-	// delete table entry
-	int i = 0;
-	while (textureCacheTable[i].index != index) {
-		i++;
+SDL_Texture *Draw::addTextureToCache(std::string filename) {
+	SDL_Texture *texture = IMG_LoadTexture(renderer, filename.c_str());
+	if (!texture) {
+		printf("Error: %s\n", IMG_GetError());
 	}
-	for (int j = i; j < cacheSize - 1; j++) {
-		textureCacheTable[j] = textureCacheTable[j+1];
-	}
-	cacheSize--;
-}
 
-SDL_Texture *Draw::addTextureToCache(const char *filename) {
-	SDL_Texture *texture = IMG_LoadTexture(renderer, filename);
+	textureCache.insert(std::pair<std::string, SDL_Texture*>(filename, texture));
 
-	if (cacheSize < TEXTURE_CACHE_SIZE) {
-		cacheSize++;
-	} else {
-		removeFromCache(cachePointer);
-	}
-	addCacheIndex(filename, cachePointer);
-	textureCache[cachePointer] = texture;
-	if (++cachePointer == TEXTURE_CACHE_SIZE) cachePointer = 0;
-	
 	return texture;
 }
-
-int Draw::searchTexture(const char *filename) {
-	int l = 0;
-	int r = cacheSize - 1;
-	while (l <= r) {
-		int m = l + (r - l) / 2;
-
-		int compare = textureCacheTable[m].filename.compare(filename);
-		if (compare == 0) {
-			return textureCacheTable[m].index;
-		}
-		if (compare < 0) {
-			l = m + 1;
-		} else {
-			r = m - 1;
-		}
-	}
-	return -1;
-}
-
-
 
 Texture *Draw::loadTexture(const char *filename) {
 	
 	Texture *texture = new Texture;
 
-	int index = searchTexture(filename);
-	if (index != -1) {
-		SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s from cache", filename);
-		texture->image = getTextureFromCache(index);
+	std::string strFilename;
+	strFilename.assign(filename);
+
+	std::map <std::string, SDL_Texture*> :: iterator it;
+	it = textureCache.find(strFilename);
+
+	if (it != textureCache.end()) {
+		texture->image = it->second;
 	} else {
-		SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s from disk", filename);
-		texture->image = addTextureToCache(filename);
+		printf("Loading %s from disk... ", filename);
+		texture->image = addTextureToCache(strFilename);
+		if (texture->image) printf("Done\n");
 	}
 
 	// get image width and height and store it in SDL_Rect
