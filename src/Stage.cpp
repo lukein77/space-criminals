@@ -10,6 +10,13 @@ Stage::~Stage() {
 
 void Stage::initStage() {
     entities.clear();
+    enemies.clear();
+    animations.clear();
+
+    Animation *explosion = new Animation("explosion.png", 8, 96, 96);
+    explosion->setPos(200, 200);
+    animations.push_back(explosion);
+
     initPlayer();
 }
 
@@ -43,8 +50,21 @@ void Stage::updateEntities() {
             it++;
         }
     }
-    
+
     handleSpawn();
+}
+
+void Stage::updateAnimations() {
+    std::list <Animation*> :: iterator it = animations.begin();
+    while (it != animations.end()) {
+        (*it)->update();
+        if ((*it)->hasFinished()) {
+            delete *it;
+            animations.erase(it++);
+        } else {
+            it++;
+        }
+    }
 }
 
 void Stage::handleSpawn() {
@@ -70,6 +90,15 @@ void Stage::drawEntities() {
     for (it = entities.begin(); it != entities.end(); it++) {
         if ((*it)->isAlive()) {
             App::instance().getDrawingManager()->blit((*it)->getTexture(), (*it)->getX(), (*it)->getY());
+        }
+    }
+}
+
+void Stage::drawAnimations() {
+    std::list <Animation*> :: iterator it;
+    for (it = animations.begin(); it != animations.end(); it++) {
+        if (!(*it)->hasFinished()) {
+            App::instance().getDrawingManager()->blit((*it)->getTexture(), (*it)->getX(), (*it)->getY(), (*it)->getClip());
         }
     }
 }

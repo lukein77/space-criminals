@@ -6,17 +6,19 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Draw.h"
+#include "Animation.h"
 #include <list>
 #include <iterator>
 
 class Player;
-
 class Enemy;
+class Animation;
 
 class Stage {
     private:
         std::list <Entity*> entities;
         std::list <Enemy*> enemies;
+        std::list <Animation*> animations;
         Player *player;
         Uint32 spawnTime;
     public:
@@ -28,7 +30,9 @@ class Stage {
         const std::list <Enemy*> &getEnemies();
         void removeEnemy(Enemy *enemy);
         void updateEntities();
+        void updateAnimations();
         void drawEntities();
+        void drawAnimations();
         void handleSpawn();
         void spawnEnemy(int enemyType);
         Player *getPlayer() { return player; }

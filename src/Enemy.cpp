@@ -6,13 +6,13 @@ Enemy::Enemy(int type) : Entity() {
     reload = 100;
     switch (enemyType) {
         case ENEMYTYPE_COMMON:
-            setTexture(App::instance().getDrawingManager()->loadTexture("graphics/enemy.png"));
+            setTexture(App::instance().getDrawingManager()->loadTexture("enemy.png"));
             setSpeed(ENEMY_SPEED_COMMON);
             setScore(100);
             setHealth(10);
             break;
         case ENEMYTYPE_DIAGONAL:
-            setTexture(App::instance().getDrawingManager()->loadTexture("graphics/enemy2.png"));
+            setTexture(App::instance().getDrawingManager()->loadTexture("enemy2.png"));
             setSpeed(ENEMY_SPEED_COMMON);
             setHealth(20);
             break;
@@ -36,6 +36,7 @@ void Enemy::update() {
     }
 
     if (!isAlive()) {
+        explode();
         App::instance().getStage()->removeEnemy(this);
     }
 

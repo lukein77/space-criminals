@@ -28,10 +28,10 @@ class Draw {
         SDL_Renderer *getRenderer() { return renderer; }
         SDL_Window *getWindow() { return window; }
 
-        void prepareScene();
-        void presentScene();
+        void clearScene();
+        void renderScene();
         Texture *loadTexture(const char *filename);
-        void blit(Texture *texture, int x, int y);
+        void blit(Texture *texture, int x, int y, SDL_Rect *clip = NULL);
 };
 
 #endif

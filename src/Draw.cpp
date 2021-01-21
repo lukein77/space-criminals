@@ -39,12 +39,12 @@ bool Draw::setRenderer(SDL_Renderer *renderer) {
     return this->renderer != nullptr;
 }
 
-void Draw::prepareScene() {
+void Draw::clearScene() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 }
 
-void Draw::presentScene() {
+void Draw::renderScene() {
 	SDL_RenderPresent(renderer);
 }
 
@@ -57,7 +57,8 @@ void Draw::clearTextureCache() {
 }
 
 SDL_Texture *Draw::addTextureToCache(std::string filename) {
-	SDL_Texture *texture = IMG_LoadTexture(renderer, filename.c_str());
+
+	SDL_Texture *texture = IMG_LoadTexture(renderer, ("graphics/"+filename).c_str());
 	if (!texture) {
 		printf("Error: %s\n", IMG_GetError());
 	}
@@ -68,6 +69,8 @@ SDL_Texture *Draw::addTextureToCache(std::string filename) {
 }
 
 Texture *Draw::loadTexture(const char *filename) {
+
+	// searches for texture in cache, if not found loads from disk
 	
 	Texture *texture = new Texture;
 
@@ -91,10 +94,15 @@ Texture *Draw::loadTexture(const char *filename) {
 	return texture;
 }
 
-void Draw::blit(Texture *texture, int x, int y) {
+void Draw::blit(Texture *texture, int x, int y, SDL_Rect *clip) {
 	
 	texture->rect.x = x;
 	texture->rect.y = y;
+
+	if (clip != NULL) {
+		texture->rect.w = clip->w;
+		texture->rect.h = clip->h;
+	}
 	
-	SDL_RenderCopy(renderer, texture->image, NULL, &(texture->rect));
+	SDL_RenderCopy(renderer, texture->image, clip, &(texture->rect));
 }

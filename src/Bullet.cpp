@@ -4,11 +4,11 @@ Bullet::Bullet(int type) : Entity() {
     bulletType = type;
     switch (bulletType) {
         case BULLETTYPE_PLAYER:
-            setTexture(App::instance().getDrawingManager()->loadTexture("graphics/b0.png"));
+            setTexture(App::instance().getDrawingManager()->loadTexture("b0.png"));
             setSpeed(BULLETSPEED_PLAYER);
             break;
         default:
-            setTexture(App::instance().getDrawingManager()->loadTexture("graphics/b1.png"));
+            setTexture(App::instance().getDrawingManager()->loadTexture("b1.png"));
             setSpeed(BULLETSPEED_ENEMY);
             break;
     }
