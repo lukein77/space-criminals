@@ -27,6 +27,7 @@ class Stage {
         void initStage();
         void initPlayer();
         void addEntity(Entity *entity);
+        void addAnimation(Animation *animation);
         const std::list <Enemy*> &getEnemies();
         void removeEnemy(Enemy *enemy);
         void updateEntities();

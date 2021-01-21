@@ -3,7 +3,7 @@
 Animation::Animation() {
     rect.x = rect.y = 0;
     currentFrame = 0;
-    frameRate = 50;
+    frameRate = 100;
     oldTime = 0;
     frames = 0;
     repeat = false;
@@ -16,34 +16,32 @@ Animation::Animation(const char *filename, int frames, int w, int h, bool repeat
     setTexture(filename, w, h);
 }
 
-Animation::~Animation() {
-    SDL_DestroyTexture(texture.image);
-}
+Animation::~Animation() {}
 
 void Animation::update() {
 
     if (oldTime + frameRate <= SDL_GetTicks()) {
+        if (!finished) {
 
-        oldTime = SDL_GetTicks();
+            oldTime = SDL_GetTicks();
 
-        rect.x += rect.w;
+            rect.x += rect.w;
 
-        if (rect.x >= textureSize.w) {
-            rect.x = 0;
-            rect.y += rect.h;
-        }
-        if (rect.y >= textureSize.h) {
-            rect.x = 0;
-            rect.y = 0;
-        }
-
-        if (++currentFrame > frames) {
-            if (!repeat) {
-                finished = true;
-            } else {
-                currentFrame = 0;
+            if (rect.x >= textureSize.w) {
+                rect.x = 0;
+                rect.y += rect.h;
             }
-        } 
+
+            if (++currentFrame > frames) {
+                if (!repeat) {
+                    finished = true;
+                } else {
+                    currentFrame = 0;
+                    rect.x = 0;
+                    rect.y = 0;
+                }
+            }
+        }
     }
 }
 

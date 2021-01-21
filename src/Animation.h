@@ -14,7 +14,7 @@ class Animation {
         long oldTime;
         bool finished;           
         bool repeat;        
-        SDL_Rect rect;  // clip
+        SDL_Rect rect;                      // clip
         Texture texture;
     public:
         Animation();

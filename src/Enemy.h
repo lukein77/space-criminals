@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "App.h"
+#include "Animation.h"
 
 class Enemy : public Entity {
     private:

@@ -36,7 +36,6 @@ void Enemy::update() {
     }
 
     if (!isAlive()) {
-        explode();
         App::instance().getStage()->removeEnemy(this);
     }
 
@@ -62,6 +61,12 @@ void Enemy::shoot() {
     bullet->setTrajectory();
     reload = rand() % 100 + 100;
     App::instance().getStage()->addEntity(bullet);
+}
+
+void Enemy::explode() {
+    Animation *explosion = new Animation("explosion.png", 8, 96, 96);
+    explosion->setPos(getX() + getW() / 2 - 48, getY() + getH() / 2 - 48);
+    App::instance().getStage()->addAnimation(explosion);
 }
 
 void Enemy::setScore(unsigned int score) {

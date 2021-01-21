@@ -13,10 +13,6 @@ void Stage::initStage() {
     enemies.clear();
     animations.clear();
 
-    Animation *explosion = new Animation("explosion.png", 8, 96, 96);
-    explosion->setPos(200, 200);
-    animations.push_back(explosion);
-
     initPlayer();
 }
 
@@ -28,6 +24,10 @@ void Stage::initPlayer() {
 
 void Stage::addEntity(Entity *entity) {
     entities.push_back(entity);
+}
+
+void Stage::addAnimation(Animation *animation) {
+    animations.push_back(animation);
 }
 
 void Stage::removeEnemy(Enemy *enemy) {
