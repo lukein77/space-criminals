@@ -24,7 +24,19 @@ bool Draw::initialize() {
         return false;
     }
 
-    IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
+    if (!IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)) {
+		printf("Failed to initialize SDL_image: %s\n", IMG_GetError());
+		return false;
+	}
+
+	if (TTF_Init() == -1) { 
+		printf("Failed to initialize SDL_ttf: %s\n", TTF_GetError());
+		return false;
+	} else {
+		defaultFont = TTF_OpenFont("graphics/PressStart2P.ttf", 18);
+		smallFont = TTF_OpenFont("graphics/PressStart2P.ttf", 12);
+		largeFont = TTF_OpenFont("graphics/PressStart2P.ttf", 48);
+	}
 
 	return true;
 }
@@ -45,6 +57,7 @@ void Draw::clearScene() {
 }
 
 void Draw::renderScene() {
+	renderUI();
 	SDL_RenderPresent(renderer);
 }
 
@@ -108,6 +121,37 @@ void Draw::blit(Texture *texture, int x, int y, SDL_Rect *clip) {
 	SDL_RenderCopy(renderer, texture->image, clip, &(texture->rect));
 }
 
+void Draw::renderText(const char *text, int x, int y, SDL_Color color, int size) {
+	TTF_Font *font;
+	switch (size) {
+		case FONTSIZE_SMALL:
+			font = smallFont;
+			break;
+		case FONTSIZE_LARGE:
+			font = largeFont;
+		default:
+			font = defaultFont;
+			break;
+	}
+
+	SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
+
+	if (surface) {
+		Texture texture;
+		texture.image = SDL_CreateTextureFromSurface(renderer, surface);
+		texture.rect.w = surface->w;
+		texture.rect.h = surface->h;
+
+		blit(&texture, x, y);
+	} else {
+		printf("Error rendering text: %s\n", TTF_GetError());
+	}
+}
+
 void Draw::renderUI() {
-	
+	SDL_Color white = {255, 255, 255, 255};
+
+	renderText("SCORE", 10, SCREEN_HEIGHT - 40, white, FONTSIZE_SMALL);
+	int score = App::instance().getStage()->getPlayer()->getScore();
+	renderText(std::to_string(score).c_str(), 10, SCREEN_HEIGHT - 24, white);
 }

@@ -42,6 +42,12 @@ enum {
     DIRECTION_RIGHT
 };
 
+enum {
+    FONTSIZE_DEFAULT,
+    FONTSIZE_LARGE,
+    FONTSIZE_SMALL
+};
+
 typedef struct {
     SDL_Texture *image;
     SDL_Rect rect;

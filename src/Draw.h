@@ -14,6 +14,9 @@ class Draw {
     private:
         SDL_Renderer *renderer;
         SDL_Window *window;
+        TTF_Font *defaultFont;
+        TTF_Font *smallFont;
+        TTF_Font *largeFont;
         
         std::map <std::string, SDL_Texture*> textureCache;
 
@@ -32,6 +35,7 @@ class Draw {
         void renderScene();
         Texture *loadTexture(const char *filename);
         void blit(Texture *texture, int x, int y, SDL_Rect *clip = NULL);
+        void renderText(const char *text, int x, int y, SDL_Color color, int size=FONTSIZE_DEFAULT);
         void renderUI();
 };
 
