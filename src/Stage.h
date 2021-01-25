@@ -21,6 +21,7 @@ class Stage {
         std::list <Animation*> animations;
         Player *player;
         Uint32 spawnTime;
+        long time;
     public:
         Stage();
         ~Stage();
@@ -36,6 +37,7 @@ class Stage {
         void drawAnimations();
         void handleSpawn();
         void spawnEnemy(int enemyType);
+        void gameOver(long time);
         Player *getPlayer() { return player; }
 };
 

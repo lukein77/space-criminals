@@ -121,7 +121,7 @@ void Draw::blit(Texture *texture, int x, int y, SDL_Rect *clip) {
 	SDL_RenderCopy(renderer, texture->image, clip, &(texture->rect));
 }
 
-void Draw::renderText(const char *text, int x, int y, SDL_Color color, int size) {
+void Draw::renderText(const char *text, int x, int y, SDL_Color color, int size, bool centered) {
 	TTF_Font *font;
 	switch (size) {
 		case FONTSIZE_SMALL:
@@ -129,6 +129,7 @@ void Draw::renderText(const char *text, int x, int y, SDL_Color color, int size)
 			break;
 		case FONTSIZE_LARGE:
 			font = largeFont;
+			break;
 		default:
 			font = defaultFont;
 			break;
@@ -142,6 +143,11 @@ void Draw::renderText(const char *text, int x, int y, SDL_Color color, int size)
 		texture.rect.w = surface->w;
 		texture.rect.h = surface->h;
 
+		if (centered) {
+			x = x - surface->w / 2;
+			y = y - surface->h / 2;
+		}
+
 		blit(&texture, x, y);
 	} else {
 		printf("Error rendering text: %s\n", TTF_GetError());
@@ -154,4 +160,9 @@ void Draw::renderUI() {
 	renderText("SCORE", 10, SCREEN_HEIGHT - 40, white, FONTSIZE_SMALL);
 	int score = App::instance().getStage()->getPlayer()->getScore();
 	renderText(std::to_string(score).c_str(), 10, SCREEN_HEIGHT - 24, white);
+}
+
+void Draw::renderGameOver() {
+	SDL_Color white = {255, 255, 255, 255};
+	renderText("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, white, FONTSIZE_LARGE, true);
 }

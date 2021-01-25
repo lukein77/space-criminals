@@ -39,7 +39,7 @@ void Enemy::update() {
         App::instance().getStage()->removeEnemy(this);
     }
 
-    if (reload == 0) {
+    if (reload == 0 && App::instance().getState() != GAME_GAMEOVER) {
         shoot();
     } else {
         reload--;

@@ -92,6 +92,14 @@ void Stage::drawEntities() {
             App::instance().getDrawingManager()->blit((*it)->getTexture(), (*it)->getX(), (*it)->getY());
         }
     }
+
+    if (App::instance().getState() == GAME_GAMEOVER) {
+        if (SDL_GetTicks() - time < 3000) {
+            App::instance().getDrawingManager()->renderGameOver();
+        } else {
+            App::instance().setState(GAME_EXIT);
+        }
+    }
 }
 
 void Stage::drawAnimations() {
@@ -101,4 +109,9 @@ void Stage::drawAnimations() {
             App::instance().getDrawingManager()->blit((*it)->getTexture(), (*it)->getX(), (*it)->getY(), (*it)->getClip());
         }
     }
+}
+
+void Stage::gameOver(long time) {
+    this->time = time;
+    App::instance().setState(GAME_GAMEOVER);
 }

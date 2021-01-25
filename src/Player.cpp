@@ -125,7 +125,7 @@ void Player::die() {
     App::instance().getStage()->addAnimation(explosion);
 
     if (--lives == 0) {
-        App::instance().setState(GAME_EXIT);
+        App::instance().getStage()->gameOver(SDL_GetTicks());
     } else {
         oldTime = SDL_GetTicks();
         respawn();
