@@ -65,7 +65,6 @@ void Bullet::update() {
             // player killed an enemy
             setHealth(0);
             enemy->takeDamage(PLAYER_DAMAGE);
-            enemy->explode();
             if (!enemy->isAlive()) {
                 App::instance().getStage()->getPlayer()->addScore(enemy->getScore());
                 printf("score: %d\n", App::instance().getStage()->getPlayer()->getScore());
@@ -77,11 +76,13 @@ void Bullet::update() {
 
         Player *player = App::instance().getStage()->getPlayer();
 
-        if (!Entity::checkCollision(&getTexture()->rect, &player->getTexture()->rect)) {
-            move();
-        } else {
-            setHealth(0);
-            player->takeDamage(5);
+        move();
+
+        if (Entity::checkCollision(&getTexture()->rect, &player->getTexture()->rect)) {
+            if (!player->isImmune()) {
+                setHealth(0);
+                player->takeDamage(ENEMY_DAMAGE);
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ Draw::~Draw() {
 }
 
 bool Draw::initialize() {
-	if (!setWindow(SDL_CreateWindow("SPACE CRIMINALS", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN))) {
+	if (!setWindow(SDL_CreateWindow("SPACE CRIMINALS", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_BORDERLESS))) {
         printf("Failed to open window: %s\n", SDL_GetError());
         return false;
     }
@@ -61,6 +61,8 @@ SDL_Texture *Draw::addTextureToCache(std::string filename) {
 	SDL_Texture *texture = IMG_LoadTexture(renderer, ("graphics/"+filename).c_str());
 	if (!texture) {
 		printf("Error: %s\n", IMG_GetError());
+	} else {
+		printf("Done\n");
 	}
 
 	textureCache.insert(std::pair<std::string, SDL_Texture*>(filename, texture));
@@ -85,7 +87,6 @@ Texture *Draw::loadTexture(const char *filename) {
 	} else {
 		printf("Loading %s from disk... ", filename);
 		texture->image = addTextureToCache(strFilename);
-		if (texture->image) printf("Done\n");
 	}
 
 	// get image width and height and store it in SDL_Rect
@@ -105,4 +106,8 @@ void Draw::blit(Texture *texture, int x, int y, SDL_Rect *clip) {
 	}
 	
 	SDL_RenderCopy(renderer, texture->image, clip, &(texture->rect));
+}
+
+void Draw::renderUI() {
+	
 }

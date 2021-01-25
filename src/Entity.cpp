@@ -39,6 +39,9 @@ void Entity::setHealth(int health) {
 
 void Entity::takeDamage(int damage) {
     health = (health > damage) ? health - damage : 0;
+    if (health == 0) {
+        this->die();
+    }
 } 
 
 bool Entity::checkCollision(SDL_Rect *a, SDL_Rect *b) {

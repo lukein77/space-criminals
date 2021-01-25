@@ -18,7 +18,7 @@ void Stage::initStage() {
 
 void Stage::initPlayer() {
     player = new Player();
-    player->setPos(500, 400);
+    player->setPos(SCREEN_WIDTH / 2 - player->getW() / 2, SCREEN_HEIGHT - player->getH() * 2);
     entities.push_back(player);
 }
 

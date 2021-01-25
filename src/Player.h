@@ -5,12 +5,15 @@
 #include "Bullet.h"
 #include "Draw.h"
 #include "App.h"
+#include "Animation.h"
 
 class Player : public Entity {
     private:
+        long oldTime;
         int lives;
         unsigned int score;
         bool shooting;
+        bool immune;
         int reload;
         bool direction[4];
     public:
@@ -23,7 +26,11 @@ class Player : public Entity {
         void shoot();
         void toggleFire();
         void addScore(unsigned int score);
+        void respawn();
+        void die();
         unsigned int getScore() { return score; }
+        bool isAlive() { return !(getHealth() == 0 && lives == 0); }
+        bool isImmune() { return immune; }
 };
 
 #endif

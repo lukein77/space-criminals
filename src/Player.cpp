@@ -2,7 +2,8 @@
 
 Player::Player() : Entity() {
     setTexture(App::instance().getDrawingManager()->loadTexture("player.png"));
-    setHealth(100);
+    SDL_SetTextureBlendMode(getTexture()->image, SDL_BLENDMODE_BLEND);
+    setHealth(10);
     setSpeed(PLAYER_SPEED);
     for (int i = 0; i < 4; i++) {
         direction[i] = false;
@@ -10,6 +11,7 @@ Player::Player() : Entity() {
     lives = 3;
     score = 0;
     shooting = false;
+    immune = false;
 }
 
 Player::~Player() {}
@@ -28,6 +30,19 @@ void Player::update() {
 
     move();    
     checkBoundaries();
+
+    if (immune) {
+        if (SDL_GetTicks() - oldTime < 2000) {
+            Uint8 alpha;
+            SDL_GetTextureAlphaMod(getTexture()->image, &alpha);
+            alpha = (alpha == 0) ? 255 : 0;
+            SDL_SetTextureAlphaMod(getTexture()->image, alpha);
+        } else {
+            immune = false;
+            oldTime = 0;
+            SDL_SetTextureAlphaMod(getTexture()->image, 255);
+        }
+    }
 }
 
 void Player::move() {
@@ -102,4 +117,23 @@ void Player::shoot() {
 
 void Player::addScore(unsigned int score) {
     this->score += score;
+}
+
+void Player::die() {
+    Animation *explosion = new Animation("explosion.png", 8, 96, 96);
+    explosion->setPos(getX() + getW() / 2 - 48, getY() + getH() / 2 - 48);
+    App::instance().getStage()->addAnimation(explosion);
+
+    if (--lives == 0) {
+        App::instance().setState(GAME_EXIT);
+    } else {
+        oldTime = SDL_GetTicks();
+        respawn();
+    }
+}
+
+void Player::respawn() {
+    setHealth(10);
+    immune = true;
+    setPos(SCREEN_WIDTH / 2 - getW() / 2, SCREEN_HEIGHT - getH() * 2);
 }

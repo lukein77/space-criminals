@@ -11,6 +11,7 @@
 #define PLAYER_RELOAD_SPEED 10
 #define PLAYER_DAMAGE 10
 
+#define ENEMY_DAMAGE 10
 #define ENEMY_SPEED_COMMON 3
 
 #define BULLETSPEED_PLAYER 16
@@ -19,6 +20,7 @@
 enum {
     GAME_RUNNING,
     GAME_PAUSED,
+    GAME_GAMEOVER,
     GAME_EXIT
 };
 

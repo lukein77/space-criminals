@@ -36,11 +36,11 @@ class Entity {
         bool isAlive() { return (health > 0); }
         Texture *getTexture() { return &texture; }
 
-        
         bool checkCollision(SDL_Rect *a, SDL_Rect *b);
 
         virtual void update() {}
         virtual void move() {}
+        virtual void die() {}
         virtual ~Entity() {}
 };
 

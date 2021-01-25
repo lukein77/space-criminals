@@ -32,6 +32,7 @@ class Draw {
         void renderScene();
         Texture *loadTexture(const char *filename);
         void blit(Texture *texture, int x, int y, SDL_Rect *clip = NULL);
+        void renderUI();
 };
 
 #endif

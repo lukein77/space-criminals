@@ -74,6 +74,9 @@ void App::doKeyUp(SDL_KeyboardEvent *event) {
 	if (event->repeat == 0 && event->keysym.scancode < MAX_KEYBOARD_KEYS)
 	{
 		switch (event->keysym.scancode) { 
+            case SDL_SCANCODE_ESCAPE:
+                state = GAME_EXIT;
+                break;
             case SDL_SCANCODE_UP:
                 player->setMovement(DIRECTION_UP, false);
                 break;
