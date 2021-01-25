@@ -158,8 +158,11 @@ void Draw::renderUI() {
 	SDL_Color white = {255, 255, 255, 255};
 
 	renderText("SCORE", 10, SCREEN_HEIGHT - 40, white, FONTSIZE_SMALL);
-	int score = App::instance().getStage()->getPlayer()->getScore();
-	renderText(std::to_string(score).c_str(), 10, SCREEN_HEIGHT - 24, white);
+	Player *player = App::instance().getStage()->getPlayer();
+	renderText(std::to_string(player->getScore()).c_str(), 10, SCREEN_HEIGHT - 24, white);
+
+	blit(loadTexture("lives.png"), 200, SCREEN_HEIGHT - 24);
+	renderText(("x"+(std::to_string(player->getLives()))).c_str(), 228, SCREEN_HEIGHT - 24, white);
 }
 
 void Draw::renderGameOver() {
