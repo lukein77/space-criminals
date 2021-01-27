@@ -33,9 +33,9 @@ bool Draw::initialize() {
 		printf("Failed to initialize SDL_ttf: %s\n", TTF_GetError());
 		return false;
 	} else {
-		defaultFont = TTF_OpenFont("graphics/PressStart2P.ttf", 18);
-		smallFont = TTF_OpenFont("graphics/PressStart2P.ttf", 12);
-		largeFont = TTF_OpenFont("graphics/PressStart2P.ttf", 48);
+		fonts[FONTSIZE_DEFAULT] = TTF_OpenFont("graphics/PressStart2P.ttf", 18);
+		fonts[FONTSIZE_SMALL] = TTF_OpenFont("graphics/PressStart2P.ttf", 12);
+		fonts[FONTSIZE_LARGE] = TTF_OpenFont("graphics/PressStart2P.ttf", 48);
 	}
 
 	return true;
@@ -122,20 +122,8 @@ void Draw::blit(Texture *texture, int x, int y, SDL_Rect *clip) {
 }
 
 void Draw::renderText(const char *text, int x, int y, SDL_Color color, int size, bool centered) {
-	TTF_Font *font;
-	switch (size) {
-		case FONTSIZE_SMALL:
-			font = smallFont;
-			break;
-		case FONTSIZE_LARGE:
-			font = largeFont;
-			break;
-		default:
-			font = defaultFont;
-			break;
-	}
 
-	SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
+	SDL_Surface *surface = TTF_RenderText_Solid(fonts[size], text, color);
 
 	if (surface) {
 		Texture texture;
@@ -161,8 +149,8 @@ void Draw::renderUI() {
 	Player *player = App::instance().getStage()->getPlayer();
 	renderText(std::to_string(player->getScore()).c_str(), 10, SCREEN_HEIGHT - 24, white);
 
-	blit(loadTexture("lives.png"), 200, SCREEN_HEIGHT - 24);
-	renderText(("x"+(std::to_string(player->getLives()))).c_str(), 228, SCREEN_HEIGHT - 24, white);
+	blit(loadTexture("lives.png"), 400, SCREEN_HEIGHT - 24);
+	renderText(("x"+(std::to_string(player->getLives()))).c_str(), 428, SCREEN_HEIGHT - 24, white);
 }
 
 void Draw::renderGameOver() {

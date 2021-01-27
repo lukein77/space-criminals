@@ -23,6 +23,7 @@ class Animation {
         void update();
         void setTexture(const char *filename, int w, int h);
         void setFrames(int frames);
+        void setFrameRate(int frameRate);
         void setX(int x);
         void setY(int y);
         void setPos(int x, int y);
@@ -30,6 +31,7 @@ class Animation {
         SDL_Rect *getClip() { return &rect; }
         int getFrames() { return frames; }
         int getCurrentFrame() { return currentFrame; }
+        int getFrameRate() { return frameRate; }
         int getX() { return x; }
         int getY() { return y; }
         bool hasFinished() { return finished; }

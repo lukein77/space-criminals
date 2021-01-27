@@ -24,12 +24,11 @@ Enemy::~Enemy() {}
 void Enemy::update() {
     move();
 
-    SDL_Rect *playerRect = &(App::instance().getStage()->getPlayer()->getTexture()->rect);
-    SDL_Rect *myRect = &(getTexture()->rect);
-
-    /*if (Entity::checkCollision(myRect, playerRect)) {
-        printf("collision\n");
-    }*/
+    Player *player = App::instance().getStage()->getPlayer();
+    if (Entity::checkCollision(&(getTexture()->rect), &(player->getTexture()->rect))) {
+        takeDamage(getHealth());
+        player->takeDamage(player->getHealth());
+    }
 
     if (getY() > SCREEN_HEIGHT + getH()) {
         setHealth(0);

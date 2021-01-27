@@ -43,7 +43,7 @@ enum {
 };
 
 enum {
-    FONTSIZE_DEFAULT,
+    FONTSIZE_DEFAULT = 0,
     FONTSIZE_LARGE,
     FONTSIZE_SMALL
 };

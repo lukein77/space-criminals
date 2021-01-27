@@ -14,6 +14,7 @@ void Stage::initStage() {
     animations.clear();
 
     initPlayer();
+
 }
 
 void Stage::initPlayer() {

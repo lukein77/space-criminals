@@ -49,6 +49,10 @@ void Animation::setFrames(int frames) {
     this->frames = frames;
 }
 
+void Animation::setFrameRate(int frameRate) {
+    this->frameRate = frameRate;
+}
+
 void Animation::setX(int x) {
     this->x = x;
 }

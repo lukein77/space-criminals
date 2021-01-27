@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Draw.h"
 #include "Animation.h"
+#include "Object.h"
 #include <list>
 #include <iterator>
 
