@@ -14,6 +14,7 @@ class Enemy : public Entity {
         Enemy(int type);
         ~Enemy();
         void update();
+        void draw();
         void move();
         void shoot();
         void die();

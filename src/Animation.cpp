@@ -32,7 +32,7 @@ void Animation::update() {
                 rect.y += rect.h;
             }
 
-            if (++currentFrame > frames) {
+            if (++currentFrame >= frames) {
                 if (!repeat) {
                     finished = true;
                 } else {

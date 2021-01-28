@@ -108,6 +108,14 @@ Texture *Draw::loadTexture(const char *filename) {
 	return texture;
 }
 
+void Draw::blit(Texture *texture, SDL_Rect *clip) {
+	if (clip != NULL) {
+		texture->rect.w = clip->w;
+		texture->rect.h = clip->h;
+	}
+	SDL_RenderCopy(renderer, texture->image, clip, &(texture->rect));
+}
+
 void Draw::blit(Texture *texture, int x, int y, SDL_Rect *clip) {
 	
 	texture->rect.x = x;

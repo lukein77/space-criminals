@@ -3,11 +3,6 @@
 
 #include "common.h"
 
-/*  
-An Entity is an object that can be drawed on the screen.
-Therefore, it has a position and a texture.
-*/
-
 class Entity {
     private:
         float x, y;
@@ -27,8 +22,8 @@ class Entity {
         void setHealth(int health);
         void takeDamage(int damage);
 
-        float getX() { return x; }
-        float getY() { return y; }
+        float getX() { return texture.rect.x; }
+        float getY() { return texture.rect.y; }
         int getW() { return texture.rect.w; }
         int getH() { return texture.rect.h; }
         int getSpeed() { return speed; }
@@ -39,6 +34,7 @@ class Entity {
         bool checkCollision(SDL_Rect *a, SDL_Rect *b);
 
         virtual void update() {}
+        virtual void draw() {}
         virtual void move() {}
         virtual void die() {}
         virtual ~Entity() {}

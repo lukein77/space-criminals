@@ -7,22 +7,22 @@ Entity::Entity() {
 }
 
 Entity::Entity(int x, int y, Texture *texture) {
-    this->x = x;
-    this->y = y;
+    this->texture.rect.x = x;
+    this->texture.rect.y = y;
     this->texture = *texture;
 }
 
 void Entity::setX(int x) {
-    this->x = x;
+    this->texture.rect.x = x;
 }
 
 void Entity::setY(int y) {
-    this->y = y;
+    this->texture.rect.y = y;
 }
 
 void Entity::setPos(int x, int y) {
-    this->x = x;
-    this->y = y;
+    this->texture.rect.x = x;
+    this->texture.rect.y = y;
 }
 
 void Entity::setSpeed(int speed) {

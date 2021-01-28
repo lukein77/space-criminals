@@ -15,6 +15,9 @@ void Stage::initStage() {
 
     initPlayer();
 
+    Object *powerup = new Object(OBJTYPE_LIFE);
+    powerup->setPos(200, 200);
+    entities.push_back(powerup);
 }
 
 void Stage::initPlayer() {
@@ -90,7 +93,7 @@ void Stage::drawEntities() {
     std::list <Entity*> :: iterator it;
     for (it = entities.begin(); it != entities.end(); it++) {
         if ((*it)->isAlive()) {
-            App::instance().getDrawingManager()->blit((*it)->getTexture(), (*it)->getX(), (*it)->getY());
+            (*it)->draw();
         }
     }
 

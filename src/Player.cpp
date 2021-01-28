@@ -45,6 +45,10 @@ void Player::update() {
     }
 }
 
+void Player::draw() {
+    App::instance().getDrawingManager()->blit(getTexture());
+}
+
 void Player::move() {
     
     struct { int x, y; } dir;
@@ -117,6 +121,17 @@ void Player::shoot() {
 
 void Player::addScore(unsigned int score) {
     this->score += score;
+}
+
+void Player::pickUpObject(Object *object) {
+    score += object->getScore();
+    switch (object->getObjectType()) {
+        case OBJTYPE_LIFE:
+            lives++;
+            break;
+        default: 
+            break;
+    }
 }
 
 void Player::die() {

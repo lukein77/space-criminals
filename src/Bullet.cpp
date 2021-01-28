@@ -86,6 +86,10 @@ void Bullet::update() {
     }
 }
 
+void Bullet::draw() {
+    App::instance().getDrawingManager()->blit(getTexture());
+}
+
 void Bullet::move() {
     if (dx != 0) setX(getX() + dx * getSpeed());
     setY(getY() + dy * getSpeed());

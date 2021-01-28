@@ -6,6 +6,9 @@
 #include "Draw.h"
 #include "App.h"
 #include "Animation.h"
+#include "Object.h"
+
+class Object;
 
 class Player : public Entity {
     private:
@@ -20,12 +23,14 @@ class Player : public Entity {
         Player();
         ~Player();
         void update();
+        void draw();
         void move();
         void checkBoundaries();
         void setMovement(int direction, bool value);
         void shoot();
         void toggleFire();
         void addScore(unsigned int score);
+        void pickUpObject(Object *object);
         void respawn();
         void die();
         unsigned int getScore() { return score; }

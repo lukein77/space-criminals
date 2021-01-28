@@ -45,6 +45,10 @@ void Enemy::update() {
     }
 }
 
+void Enemy::draw() {
+    App::instance().getDrawingManager()->blit(getTexture());
+}
+
 void Enemy::move() {
     if (enemyType == ENEMYTYPE_COMMON) {
         setY(getY() + getSpeed());

@@ -36,6 +36,12 @@ enum {
 };
 
 enum {
+    OBJTYPE_SCORE,
+    OBJTYPE_LIFE,
+    OBJTYPE_SHIELD
+};
+
+enum {
     DIRECTION_UP = 0,
     DIRECTION_DOWN,
     DIRECTION_LEFT,
