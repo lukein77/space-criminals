@@ -14,16 +14,27 @@ void Stage::initStage() {
     animations.clear();
 
     initPlayer();
-
-    Object *powerup = new Object(OBJTYPE_LIFE);
-    powerup->setPos(200, 200);
-    entities.push_back(powerup);
+    loadBackground();
 }
 
 void Stage::initPlayer() {
     player = new Player();
     player->setPos(SCREEN_WIDTH / 2 - player->getW() / 2, SCREEN_HEIGHT - player->getH() * 2);
     entities.push_back(player);
+}
+
+void Stage::loadBackground() {
+    background = App::instance().getDrawingManager()->loadTexture("background01.png");
+    background->rect.h *= SCREEN_WIDTH / (background->rect.w);
+    background->rect.w = SCREEN_WIDTH;
+    background->rect.x = 0;
+    background->rect.y = SCREEN_HEIGHT - background->rect.h;
+}
+
+void Stage::updateBackground() {
+    if (background->rect.y < -5) {
+        background->rect.y += 100;
+    }
 }
 
 void Stage::addEntity(Entity *entity) {
@@ -42,6 +53,20 @@ const std::list <Enemy*> &Stage::getEnemies() {
     return enemies;
 }
 
+void Stage::updateAndDraw() {
+    updateBackground();
+    updateEntities();
+    handleSpawn();
+
+    drawEntities();
+    drawAnimations();
+    if (App::instance().getState() == GAME_GAMEOVER) {
+        drawGameOver();
+    }
+    
+    updateAnimations();
+}
+
 void Stage::updateEntities() {
     std::list <Entity*> :: iterator it = entities.begin();
     while (it != entities.end()) {
@@ -54,8 +79,6 @@ void Stage::updateEntities() {
             it++;
         }
     }
-
-    handleSpawn();
 }
 
 void Stage::updateAnimations() {
@@ -72,13 +95,9 @@ void Stage::updateAnimations() {
 }
 
 void Stage::handleSpawn() {
-    if (spawnTime < UINT32_MAX) {
-        spawnTime++;
-        if (spawnTime % 100 == 0) {
-            spawnEnemy(ENEMYTYPE_COMMON);
-        }
-    } else {
-        spawnTime = 0;
+    if (SDL_GetTicks() - spawnTime >= 2000) {
+        spawnTime = SDL_GetTicks();
+        spawnEnemy(ENEMYTYPE_COMMON);
     }
 }
 
@@ -90,18 +109,13 @@ void Stage::spawnEnemy(int enemyType) {
 }
 
 void Stage::drawEntities() {
+
+    App::instance().getDrawingManager()->blit(background);
+
     std::list <Entity*> :: iterator it;
     for (it = entities.begin(); it != entities.end(); it++) {
         if ((*it)->isAlive()) {
             (*it)->draw();
-        }
-    }
-
-    if (App::instance().getState() == GAME_GAMEOVER) {
-        if (SDL_GetTicks() - time < 3000) {
-            App::instance().getDrawingManager()->renderGameOver();
-        } else {
-            App::instance().setState(GAME_EXIT);
         }
     }
 }
@@ -112,6 +126,14 @@ void Stage::drawAnimations() {
         if (!(*it)->hasFinished()) {
             App::instance().getDrawingManager()->blit((*it)->getTexture(), (*it)->getX(), (*it)->getY(), (*it)->getClip());
         }
+    }
+}
+
+void Stage::drawGameOver() {
+    if (SDL_GetTicks() - time < 3000) {
+        App::instance().getDrawingManager()->renderGameOver();
+    } else {
+        App::instance().setState(GAME_EXIT);
     }
 }
 

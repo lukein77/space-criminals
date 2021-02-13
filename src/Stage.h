@@ -23,19 +23,24 @@ class Stage {
         Player *player;
         Uint32 spawnTime;
         long time;
+        Texture *background;
     public:
         Stage();
         ~Stage();
         void initStage();
         void initPlayer();
+        void loadBackground();
+        void updateBackground();
         void addEntity(Entity *entity);
         void addAnimation(Animation *animation);
         const std::list <Enemy*> &getEnemies();
         void removeEnemy(Enemy *enemy);
+        void updateAndDraw();
         void updateEntities();
         void updateAnimations();
         void drawEntities();
         void drawAnimations();
+        void drawGameOver();
         void handleSpawn();
         void spawnEnemy(int enemyType);
         void gameOver(long time);

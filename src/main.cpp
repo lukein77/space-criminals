@@ -22,10 +22,7 @@ int main(int argc, char *argv[]) {
         
         app.doInput();
         
-        app.getStage()->updateEntities();
-        app.getStage()->drawEntities();
-        app.getStage()->drawAnimations();
-        app.getStage()->updateAnimations();
+        app.getStage()->updateAndDraw();
 
         app.getDrawingManager()->renderScene();
 
