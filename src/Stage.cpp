@@ -33,7 +33,7 @@ void Stage::loadBackground() {
 
 void Stage::updateBackground() {
     if (background->rect.y < -5) {
-        background->rect.y += 100;
+        background->rect.y += BACKGROUND_SPEED;
     }
 }
 
