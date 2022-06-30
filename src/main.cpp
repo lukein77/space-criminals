@@ -7,10 +7,14 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+    app.getAudioManager()->loadMusic("01 - Criminals from Space.mp3");
+
     app.setState(GAME_RUNNING);
 
     app.createStage();
     app.getStage()->initStage();
+
+    app.getAudioManager()->playMusic();
 
     Player *player = app.getStage()->getPlayer();
 

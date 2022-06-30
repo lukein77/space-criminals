@@ -4,6 +4,7 @@
 #include "common.h"
 #include "Stage.h"
 #include "Draw.h"
+#include "Audio.h"
 
 class Stage;
 class Draw;
@@ -13,6 +14,7 @@ class App {
         int state;
         Stage *stage;
         Draw *drawingManager;
+        Audio *audioManager;
 
         App();
         ~App();
@@ -31,6 +33,7 @@ class App {
 
         Stage *getStage() { return stage; }
         Draw *getDrawingManager() { return drawingManager; }
+        Audio *getAudioManager() { return audioManager; }
 
         void setState(int state);
         int getState() { return state; }
