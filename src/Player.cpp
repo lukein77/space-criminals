@@ -138,6 +138,7 @@ void Player::die() {
     Animation *explosion = new Animation("explosion.png", 8, 96, 96);
     explosion->setPos(getX() + getW() / 2 - 48, getY() + getH() / 2 - 48);
     App::instance().getStage()->addAnimation(explosion);
+    App::instance().getAudioManager()->playSound("death.wav");
 
     if (--lives == 0) {
         App::instance().getStage()->gameOver(SDL_GetTicks());

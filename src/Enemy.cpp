@@ -70,6 +70,7 @@ void Enemy::die() {
     Animation *explosion = new Animation("explosion.png", 8, 96, 96);
     explosion->setPos(getX() + getW() / 2 - 48, getY() + getH() / 2 - 48);
     App::instance().getStage()->addAnimation(explosion);
+    App::instance().getAudioManager()->playSound("explode.wav");
 }
 
 void Enemy::setScore(unsigned int score) {
