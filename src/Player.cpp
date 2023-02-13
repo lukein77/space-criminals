@@ -80,6 +80,8 @@ void Player::move() {
         setX(getX() + dx * getSpeed());
         setY(getY() + dy * getSpeed());
     }
+    //setDirection(dir.x, dir.y);
+    //Entity::move();
 }
 
 void Player::setMovement(int direction, bool value) {
@@ -112,9 +114,7 @@ void Player::toggleFire() {
 }
 
 void Player::shoot() {
-    Bullet *bullet = new Bullet(BULLETTYPE_PLAYER);
-    bullet->setPos(this->getX() + this->getW() / 2 - bullet->getW() / 2, this->getY());
-    bullet->setTrajectory();
+    Bullet *bullet = new Bullet(BULLETTYPE_PLAYER, this->getX() + this->getW() / 2 - 8, this->getY());
     reload = PLAYER_RELOAD_SPEED;
     App::instance().getStage()->addEntity(bullet);
 }

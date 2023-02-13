@@ -29,6 +29,30 @@ void Entity::setSpeed(int speed) {
     this->speed = speed;
 }
 
+void Entity::move() {
+    setX(getX() + direction.x * speed);
+    setY(getY() + direction.y * speed);
+}
+
+void Entity::setDirection(double x, double y) {
+    double length = sqrt((x*x) + (y*y));
+    if (length != 0) {
+        this->direction.x = x / length;
+        this->direction.y = y / length;
+    } else {
+        this->direction.x = x;
+        this->direction.y = y;
+    }
+}
+
+void Entity::setDirection(vector d) {
+    this->direction = d;
+}
+
+void Entity::setDirectionTowardsPoint(int x1, int y1, int x2, int y2) {
+    this->direction = getVector(x1, y1, x2, y2);
+}
+
 void Entity::setTexture(Texture *texture) {
     this->texture = *texture;
 }
@@ -53,7 +77,7 @@ bool Entity::checkCollision(SDL_Rect *a, SDL_Rect *b) {
 }
 
 /* Returns a normalized vector between two points.*/
-vector Entity::getVector(float x1, float x2, float y1, float y2) {
+vector Entity::getVector(int x1, int y1, int x2, int y2) {
     vector v;
 
     v.x = x2 - x1;

@@ -97,13 +97,12 @@ void Stage::updateAnimations() {
 void Stage::handleSpawn() {
     if (SDL_GetTicks() - spawnTime >= 2000) {
         spawnTime = SDL_GetTicks();
-        spawnEnemy(ENEMYTYPE_KAMIKAZE);
+        spawnEnemy(ENEMYTYPE_DIAGONAL);
     }
 }
 
 void Stage::spawnEnemy(int enemyType) {
     Enemy *enemy = new Enemy(enemyType);
-    enemy->setPos(rand() % (SCREEN_WIDTH - enemy->getW()), -enemy->getH());
     addEntity(enemy);
     enemies.push_back(enemy);
 }

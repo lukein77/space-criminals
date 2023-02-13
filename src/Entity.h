@@ -9,6 +9,7 @@ class Entity {
         int w, h;
         int speed;
         int health;
+        vector direction;
         Texture texture;
     public:
         Entity();
@@ -17,6 +18,10 @@ class Entity {
         void setY(int y);
         void setPos(int x, int y);
         void setSpeed(int speed);
+        void setDirection(double x, double y);
+        void setDirection(vector d);
+        void setDirectionTowardsPoint(int x1, int y1, int x2, int y2);
+        void move();
         
         void setTexture(Texture *texture);
         void setHealth(int health);
@@ -27,16 +32,16 @@ class Entity {
         int getW() { return texture.rect.w; }
         int getH() { return texture.rect.h; }
         int getSpeed() { return speed; }
+        vector getDirection() { return direction; }
         int getHealth() { return health; }
         bool isAlive() { return (health > 0); }
         Texture *getTexture() { return &texture; }
 
         bool checkCollision(SDL_Rect *a, SDL_Rect *b);
-        vector getVector(float x1, float x2, float y1, float y2);
+        vector getVector(int x1, int y1, int x2, int y2);
 
         virtual void update() {}
         virtual void draw() {}
-        virtual void move() {}
         virtual void die() {}
         virtual ~Entity() {}
 };
