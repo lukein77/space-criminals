@@ -65,6 +65,8 @@ void Bullet::update() {
             enemy->takeDamage(PLAYER_DAMAGE);
             if (!enemy->isAlive()) {
                 App::instance().getStage()->getPlayer()->addScore(enemy->getScore());
+            } else {
+                App::instance().getAudioManager()->playSound("hurt.wav");
             }
         }
     } else {
