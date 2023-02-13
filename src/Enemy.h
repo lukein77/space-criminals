@@ -8,6 +8,7 @@
 class Enemy : public Entity {
     private:
         int enemyType;
+        vector direction;
         int reload;
         unsigned int score;
     public:
@@ -19,6 +20,8 @@ class Enemy : public Entity {
         void shoot();
         void die();
         void setScore(unsigned int score);
+        void setDirection(int x, int y);
+        vector &getDirection() { return direction; };
         unsigned int getScore() { return score; }
 };
 

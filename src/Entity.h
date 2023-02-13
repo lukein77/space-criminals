@@ -32,6 +32,7 @@ class Entity {
         Texture *getTexture() { return &texture; }
 
         bool checkCollision(SDL_Rect *a, SDL_Rect *b);
+        vector getVector(float x1, float x2, float y1, float y2);
 
         virtual void update() {}
         virtual void draw() {}

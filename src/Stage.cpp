@@ -97,7 +97,7 @@ void Stage::updateAnimations() {
 void Stage::handleSpawn() {
     if (SDL_GetTicks() - spawnTime >= 2000) {
         spawnTime = SDL_GetTicks();
-        spawnEnemy(ENEMYTYPE_COMMON);
+        spawnEnemy(ENEMYTYPE_KAMIKAZE);
     }
 }
 

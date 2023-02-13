@@ -6,15 +6,30 @@ Enemy::Enemy(int type) : Entity() {
     reload = 100;
     switch (enemyType) {
         case ENEMYTYPE_COMMON:
+        /* Simplest enemy. Only travels in one direction and shoots occasionally. */
             setTexture(App::instance().getDrawingManager()->loadTexture("enemy.png"));
+            direction.x = 0;
+            direction.y = 1;
             setSpeed(ENEMY_SPEED_COMMON);
             setScore(100);
             setHealth(10);
             break;
         case ENEMYTYPE_DIAGONAL:
+        /* Moves diagonally and bounces off the edges of the screen. Harder to kill.*/
             setTexture(App::instance().getDrawingManager()->loadTexture("enemy2.png"));
             setSpeed(ENEMY_SPEED_COMMON);
             setHealth(20);
+            break;
+        case ENEMYTYPE_KAMIKAZE:
+        /* Tries to move directly towards the player at high speed.*/
+            setTexture(App::instance().getDrawingManager()->loadTexture("enemy3.png"));
+            setSpeed(ENEMY_SPEED_SUPERFAST);
+            setHealth(10);
+
+            Player *player = App::instance().getStage()->getPlayer();
+            // get player's position and draw a vector towards him
+            direction = getVector(getX(), getY(), player->getX(), player->getY());
+
             break;
     }
 }
@@ -50,16 +65,17 @@ void Enemy::draw() {
 }
 
 void Enemy::move() {
-    if (enemyType == ENEMYTYPE_COMMON) {
+    /*if (enemyType == ENEMYTYPE_COMMON) {
         setY(getY() + getSpeed());
-    }
+    }*/
+    setX(getX() + direction.x * getSpeed());
+    setY(getY() + direction.y * getSpeed());
 }
 
 void Enemy::shoot() {
     Bullet *bullet;
-    if (enemyType == ENEMYTYPE_COMMON) {
+    //if (enemyType == ENEMYTYPE_COMMON) {
         bullet = new Bullet(BULLETTYPE_ENEMY_FOLLOW);
-    }
     bullet->setPos(getX() + getW() / 2 - bullet->getW() /  2, getY() + getH());
     bullet->setTrajectory();
     reload = rand() % 100 + 100;

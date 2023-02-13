@@ -13,6 +13,8 @@
 
 #define ENEMY_DAMAGE 10
 #define ENEMY_SPEED_COMMON 3
+#define ENEMY_SPEED_FAST 5
+#define ENEMY_SPEED_SUPERFAST 8
 
 #define BULLETSPEED_PLAYER 16
 #define BULLETSPEED_ENEMY 10
@@ -34,7 +36,8 @@ enum {
 
 enum {
     ENEMYTYPE_COMMON,
-    ENEMYTYPE_DIAGONAL
+    ENEMYTYPE_DIAGONAL,
+    ENEMYTYPE_KAMIKAZE
 };
 
 enum {
@@ -60,5 +63,10 @@ typedef struct {
     SDL_Texture *image;
     SDL_Rect rect;
 } Texture;
+
+typedef struct vector {
+    double x;
+    double y;
+} vector;
 
 #endif

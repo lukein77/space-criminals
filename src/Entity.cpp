@@ -51,3 +51,17 @@ bool Entity::checkCollision(SDL_Rect *a, SDL_Rect *b) {
         return false;
     }
 }
+
+/* Returns a normalized vector between two points.*/
+vector Entity::getVector(float x1, float x2, float y1, float y2) {
+    vector v;
+
+    v.x = x2 - x1;
+    v.y = y2 - y1;
+    
+    double length = sqrt((v.x * v.x) + (v.y * v.y));
+    v.x = v.x / length;
+    v.y = v.y / length;
+
+    return v;
+}
