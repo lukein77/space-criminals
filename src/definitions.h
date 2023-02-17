@@ -2,17 +2,19 @@
 #define _DEFINITIONS_H_DEFINED_
 
 #define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
+#define SCREEN_HEIGHT 720
 
 #define MAX_KEYBOARD_KEYS 350
 #define TEXTURE_CACHE_SIZE 4
 
-#define PLAYER_SPEED 6
+#define PLAYER_SPEED 8
 #define PLAYER_RELOAD_SPEED 10
 #define PLAYER_DAMAGE 10
 
 #define ENEMY_DAMAGE 10
-#define ENEMY_SPEED_COMMON 3
+#define ENEMY_SPEED_COMMON 4
+#define ENEMY_SPEED_FAST 10
+#define ENEMY_SPEED_SUPERFAST 15
 
 #define BULLETSPEED_PLAYER 16
 #define BULLETSPEED_ENEMY 10
@@ -34,7 +36,8 @@ enum {
 
 enum {
     ENEMYTYPE_COMMON,
-    ENEMYTYPE_DIAGONAL
+    ENEMYTYPE_DIAGONAL,
+    ENEMYTYPE_KAMIKAZE
 };
 
 enum {
@@ -60,5 +63,10 @@ typedef struct {
     SDL_Texture *image;
     SDL_Rect rect;
 } Texture;
+
+typedef struct vector {
+    double x;
+    double y;
+} vector;
 
 #endif

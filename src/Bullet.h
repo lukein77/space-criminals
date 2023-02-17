@@ -10,9 +10,8 @@
 class Bullet : public Entity {
     private:
         int bulletType;
-        float dx, dy;
     public:
-        Bullet(int type);
+        Bullet(int type, int x, int y);
         ~Bullet();
         void setTrajectory();
         void update();

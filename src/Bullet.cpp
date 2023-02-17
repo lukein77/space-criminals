@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-Bullet::Bullet(int type) : Entity() {
+Bullet::Bullet(int type, int x, int y) : Entity() {
     bulletType = type;
     switch (bulletType) {
         case BULLETTYPE_PLAYER:
@@ -12,24 +12,22 @@ Bullet::Bullet(int type) : Entity() {
             setSpeed(BULLETSPEED_ENEMY);
             break;
     }
+    setPos(x, y);
+    setTrajectory();
 }
 
 Bullet::~Bullet() {}
 
 void Bullet::setTrajectory() {
     if (bulletType == BULLETTYPE_PLAYER) {
-        dx = 0;
-        dy = -1;
+        setDirection(0, -1);
     } else if (bulletType == BULLETTYPE_ENEMY_COMMON) {
-        dx = 0;
-        dy = 1;
+        setDirection(0, 1);
     } else if (bulletType == BULLETTYPE_ENEMY_FOLLOW) {
         Player *player = App::instance().getStage()->getPlayer();
-        dx = (player->getX() + player->getW() / 2) - getX();
-        dy = (player->getY() + player->getH() / 2) - getY();
-        float n = sqrt(pow(dx, 2) + pow(dy, 2));
-        dx = dx / n;
-        dy = dy / n;
+        int player_x = (player->getX() + player->getW() / 2);
+        int player_y = (player->getY() + player->getH() / 2);
+        setDirectionTowardsPoint(getX(), getY(), player_x, player_y);
     }
 }
 
@@ -57,7 +55,7 @@ void Bullet::update() {
 
         // if there are no collisions, move
         if (!enemy) {
-            move();
+            Entity::move();
             if (getY() < 0) {
                 setHealth(0);
             }
@@ -67,6 +65,8 @@ void Bullet::update() {
             enemy->takeDamage(PLAYER_DAMAGE);
             if (!enemy->isAlive()) {
                 App::instance().getStage()->getPlayer()->addScore(enemy->getScore());
+            } else {
+                App::instance().getAudioManager()->playSound("hurt.wav");
             }
         }
     } else {
@@ -75,7 +75,7 @@ void Bullet::update() {
 
         Player *player = App::instance().getStage()->getPlayer();
 
-        move();
+        Entity::move();
 
         if (Entity::checkCollision(&getTexture()->rect, &player->getTexture()->rect)) {
             if (!player->isImmune()) {
@@ -88,9 +88,4 @@ void Bullet::update() {
 
 void Bullet::draw() {
     App::instance().getDrawingManager()->blit(getTexture());
-}
-
-void Bullet::move() {
-    if (dx != 0) setX(getX() + dx * getSpeed());
-    setY(getY() + dy * getSpeed());
 }

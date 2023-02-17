@@ -95,15 +95,14 @@ void Stage::updateAnimations() {
 }
 
 void Stage::handleSpawn() {
-    if (SDL_GetTicks() - spawnTime >= 2000) {
+    if (SDL_GetTicks() - spawnTime >= 1500) {
         spawnTime = SDL_GetTicks();
-        spawnEnemy(ENEMYTYPE_COMMON);
+        spawnEnemy(rand() % 3);
     }
 }
 
 void Stage::spawnEnemy(int enemyType) {
     Enemy *enemy = new Enemy(enemyType);
-    enemy->setPos(rand() % (SCREEN_WIDTH - enemy->getW()), -enemy->getH());
     addEntity(enemy);
     enemies.push_back(enemy);
 }
