@@ -5,12 +5,12 @@
 
 class Entity {
     private:
-        float x, y;
-        int w, h;
         int speed;
         int health;
         vector direction;
         Texture texture;
+
+        void normalizeDirection();
     public:
         Entity();
         Entity(int x, int y, Texture *texture);
@@ -19,7 +19,8 @@ class Entity {
         void setPos(int x, int y);
         void setSpeed(int speed);
         void setDirection(double x, double y);
-        void setDirection(vector d);
+        void setDirectionX(double x);
+        void setDirectionY(double y);
         void setDirectionTowardsPoint(int x1, int y1, int x2, int y2);
         void move();
         

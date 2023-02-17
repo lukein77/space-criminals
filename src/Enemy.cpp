@@ -21,6 +21,7 @@ Enemy::Enemy(int type) : Entity() {
             setDirection((rand() % 2) ? 1 : -1, 0.5);
             setSpeed(ENEMY_SPEED_FAST);
             setHealth(20);
+            setScore(250);
             break;
         case ENEMYTYPE_KAMIKAZE:
         /* Tries to move directly towards the player at high speed.*/
@@ -28,6 +29,7 @@ Enemy::Enemy(int type) : Entity() {
             setPos(rand() % (SCREEN_WIDTH - getW()), -getH());
             setSpeed(ENEMY_SPEED_SUPERFAST);
             setHealth(10);
+            setScore(200);
 
             // get player's position and draw a vector towards him
             Player *player = App::instance().getStage()->getPlayer();
@@ -56,9 +58,7 @@ void Enemy::update() {
     if (enemyType == ENEMYTYPE_DIAGONAL) {
         // Check if it is on either edge of the screen
         if ((getX() <= 0) || (getX() >= SCREEN_WIDTH - getW())) {
-            vector direction = getDirection();
-            direction.x = -direction.x;
-            setDirection(direction);
+            setDirectionX(-getDirection().x);
         }
     }
 

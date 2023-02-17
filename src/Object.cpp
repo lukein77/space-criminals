@@ -14,7 +14,12 @@ Object::Object(int objType) : Object() {
             getTexture()->rect.w = animation->getTexture()->rect.w;
             getTexture()->rect.h = animation->getTexture()->rect.h;
             break;
-        
+        case OBJTYPE_LIFE:
+            score = 2500;
+            animation = new Animation("powerup2.png", 4, 24, 24, true);
+            getTexture()->rect.w = animation->getTexture()->rect.w;
+            getTexture()->rect.h = animation->getTexture()->rect.h;
+            break;
         default:
             score = 0;
             animation = nullptr;

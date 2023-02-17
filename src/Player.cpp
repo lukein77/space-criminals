@@ -6,7 +6,7 @@ Player::Player() : Entity() {
     setHealth(10);
     setSpeed(PLAYER_SPEED);
     for (int i = 0; i < 4; i++) {
-        direction[i] = false;
+        movement[i] = false;
     }
     lives = 3;
     score = 0;
@@ -28,7 +28,7 @@ void Player::update() {
         }
     }
 
-    move();    
+    Entity::move();    
     checkBoundaries();
 
     if (immune) {
@@ -49,43 +49,25 @@ void Player::draw() {
     App::instance().getDrawingManager()->blit(getTexture());
 }
 
-void Player::move() {
-    
-    struct { int x, y; } dir;
-    dir.x = 0;
-    dir.y = 0;
-
-    if (direction[DIRECTION_UP]) {
-        dir.y = -1;
-    }
-    if (direction[DIRECTION_DOWN]) {
-        dir.y = 1;
-    }
-    if (direction[DIRECTION_LEFT]) {
-        dir.x = -1;
-    }
-    if (direction[DIRECTION_RIGHT]) {
-        dir.x = 1;
-    }
-
-    float dx, dy;
-    double n;
-
-    n = sqrt(pow(dir.x, 2) + pow(dir.y, 2));
-
-    if (n != 0) {    
-        dx = dir.x / n;
-        dy = dir.y / n;
-
-        setX(getX() + dx * getSpeed());
-        setY(getY() + dy * getSpeed());
-    }
-    //setDirection(dir.x, dir.y);
-    //Entity::move();
-}
+/*void Player::move() {
+    Entity::move();
+}*/
 
 void Player::setMovement(int direction, bool value) {
-    this->direction[direction] = value;
+    this->movement[direction] = value;
+    setDirection(0,0);
+    if (movement[DIRECTION_UP]) {
+        setDirectionY(-1);
+    }
+    if (movement[DIRECTION_DOWN]) {
+        setDirectionY(1);
+    }
+    if (movement[DIRECTION_LEFT]) {
+        setDirectionX(-1);
+    }
+    if (movement[DIRECTION_RIGHT]) {
+        setDirectionX(1);
+    }
 }
 
 void Player::checkBoundaries() {

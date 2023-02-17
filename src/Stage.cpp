@@ -95,9 +95,9 @@ void Stage::updateAnimations() {
 }
 
 void Stage::handleSpawn() {
-    if (SDL_GetTicks() - spawnTime >= 2000) {
+    if (SDL_GetTicks() - spawnTime >= 1500) {
         spawnTime = SDL_GetTicks();
-        spawnEnemy(ENEMYTYPE_DIAGONAL);
+        spawnEnemy(rand() % 3);
     }
 }
 

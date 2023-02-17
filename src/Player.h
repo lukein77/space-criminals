@@ -18,7 +18,7 @@ class Player : public Entity {
         bool shooting;
         bool immune;
         int reload;
-        bool direction[4];
+        bool movement[4];
     public:
         Player();
         ~Player();

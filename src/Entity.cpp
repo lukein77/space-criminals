@@ -1,7 +1,6 @@
 #include "Entity.h"
 
 Entity::Entity() {
-    x = y = 0;
     speed = 0;
     health = 1;
 }
@@ -35,18 +34,27 @@ void Entity::move() {
 }
 
 void Entity::setDirection(double x, double y) {
-    double length = sqrt((x*x) + (y*y));
-    if (length != 0) {
-        this->direction.x = x / length;
-        this->direction.y = y / length;
-    } else {
-        this->direction.x = x;
-        this->direction.y = y;
-    }
+    this->direction.x = x;
+    this->direction.y = y;
+    normalizeDirection();
 }
 
-void Entity::setDirection(vector d) {
-    this->direction = d;
+void Entity::setDirectionX(double x) {
+    this->direction.x = x;
+    normalizeDirection();
+}
+
+void Entity::setDirectionY(double y) {
+    this->direction.y = y;
+    normalizeDirection();
+}
+
+void Entity::normalizeDirection() {
+    double length = sqrt((direction.x*direction.x) + (direction.y*direction.y));
+    if (length != 0) {
+        direction.x /= length;
+        direction.y /= length;
+    }
 }
 
 void Entity::setDirectionTowardsPoint(int x1, int y1, int x2, int y2) {
