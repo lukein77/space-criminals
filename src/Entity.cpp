@@ -24,6 +24,14 @@ void Entity::setPos(int x, int y) {
     this->texture.rect.y = y;
 }
 
+void Entity::setW(int w) {
+    this->texture.rect.w = w;
+}
+
+void Entity::setH(int h) {
+    this->texture.rect.h = h;
+}
+
 void Entity::setSpeed(int speed) {
     this->speed = speed;
 }
@@ -76,12 +84,8 @@ void Entity::takeDamage(int damage) {
     }
 } 
 
-bool Entity::checkCollision(SDL_Rect *a, SDL_Rect *b) {
-    if (SDL_HasIntersection(a, b) == SDL_TRUE) {
-        return true;
-    } else {
-        return false;
-    }
+bool Entity::checkCollision(SDL_Rect other) {
+    return (SDL_HasIntersection(&this->texture.rect, &other) == SDL_TRUE);
 }
 
 /* Returns a normalized vector between two points.*/

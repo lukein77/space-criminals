@@ -15,7 +15,6 @@ class Enemy : public Entity {
         ~Enemy();
         void update();
         void draw();
-        void move();
         void shoot();
         void die();
         void setScore(unsigned int score);

@@ -28,7 +28,7 @@ void Player::update() {
         }
     }
 
-    Entity::move();    
+    move();    
     checkBoundaries();
 
     if (immune) {
@@ -48,10 +48,6 @@ void Player::update() {
 void Player::draw() {
     App::instance().getDrawingManager()->blit(getTexture());
 }
-
-/*void Player::move() {
-    Entity::move();
-}*/
 
 void Player::setMovement(int direction, bool value) {
     this->movement[direction] = value;

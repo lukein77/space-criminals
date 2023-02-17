@@ -16,7 +16,6 @@ class Bullet : public Entity {
         void setTrajectory();
         void update();
         void draw();
-        void move();
 };
 
 #endif

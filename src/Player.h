@@ -24,7 +24,6 @@ class Player : public Entity {
         ~Player();
         void update();
         void draw();
-        void move();
         void checkBoundaries();
         void setMovement(int direction, bool value);
         void shoot();

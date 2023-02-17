@@ -19,9 +19,10 @@ class Object : public Entity {
         ~Object();
         void update();
         void draw();
-        void move();
         int getObjectType() { return objectType; }
         int getScore() { return score; }
+        
+        void setAnimation(const char *filename, int frames, int w, int h);
 };
 
 #endif

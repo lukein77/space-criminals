@@ -34,6 +34,8 @@ class Animation {
         int getFrameRate() { return frameRate; }
         int getX() { return x; }
         int getY() { return y; }
+        int getW() { return rect.w; }
+        int getH() { return rect.h; }
         bool hasFinished() { return finished; }
 
 };

@@ -17,6 +17,8 @@ class Entity {
         void setX(int x);
         void setY(int y);
         void setPos(int x, int y);
+        void setW(int w);
+        void setH(int h);
         void setSpeed(int speed);
         void setDirection(double x, double y);
         void setDirectionX(double x);
@@ -28,17 +30,19 @@ class Entity {
         void setHealth(int health);
         void takeDamage(int damage);
 
-        float getX() { return texture.rect.x; }
-        float getY() { return texture.rect.y; }
+        int getX() { return texture.rect.x; }
+        int getY() { return texture.rect.y; }
         int getW() { return texture.rect.w; }
         int getH() { return texture.rect.h; }
+        SDL_Rect getRect() { return texture.rect; }
+
         int getSpeed() { return speed; }
         vector getDirection() { return direction; }
         int getHealth() { return health; }
         bool isAlive() { return (health > 0); }
         Texture *getTexture() { return &texture; }
 
-        bool checkCollision(SDL_Rect *a, SDL_Rect *b);
+        bool checkCollision(SDL_Rect other);
         vector getVector(int x1, int y1, int x2, int y2);
 
         virtual void update() {}

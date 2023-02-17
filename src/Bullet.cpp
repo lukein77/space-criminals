@@ -45,8 +45,7 @@ void Bullet::update() {
 
         for (it = enemies.begin(); it != enemies.end(); it++) {
             if ((*it)->isAlive()) {
-                SDL_Rect enemyRect = (*it)->getTexture()->rect;
-                if (Entity::checkCollision(&myRect, &enemyRect)) {
+                if (checkCollision((*it)->getRect())) {
                     enemy = *it;
                     break;
                 }
@@ -75,9 +74,9 @@ void Bullet::update() {
 
         Player *player = App::instance().getStage()->getPlayer();
 
-        Entity::move();
+        move();
 
-        if (Entity::checkCollision(&getTexture()->rect, &player->getTexture()->rect)) {
+        if (checkCollision(player->getRect())) {
             if (!player->isImmune()) {
                 setHealth(0);
                 player->takeDamage(ENEMY_DAMAGE);

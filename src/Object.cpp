@@ -10,15 +10,13 @@ Object::Object(int objType) : Object() {
     switch (objectType) {
         case OBJTYPE_SCORE:
             score = 1000;
-            animation = new Animation("powerup.png", 4, 24, 24, true);
-            getTexture()->rect.w = animation->getTexture()->rect.w;
-            getTexture()->rect.h = animation->getTexture()->rect.h;
+            setAnimation("powerup.png", 4, 24, 24);
+            //getTexture()->rect.w = animation->getTexture()->rect.w;
+            //getTexture()->rect.h = animation->getTexture()->rect.h;
             break;
         case OBJTYPE_LIFE:
             score = 2500;
-            animation = new Animation("powerup2.png", 4, 24, 24, true);
-            getTexture()->rect.w = animation->getTexture()->rect.w;
-            getTexture()->rect.h = animation->getTexture()->rect.h;
+            setAnimation("powerup2.png", 4, 24, 24);
             break;
         default:
             score = 0;
@@ -31,6 +29,12 @@ Object::Object(int objType) : Object() {
 
 Object::~Object() {}
 
+void Object::setAnimation(const char *filename, int frames, int w, int h) {
+    this->animation = new Animation(filename, frames, w, h, true);
+    this->setW(animation->getW());
+    this->setH(animation->getH());
+}
+
 void Object::update() {
     
     if (animation) {
@@ -39,19 +43,17 @@ void Object::update() {
 
     move();
 
+    if (getY() > SCREEN_HEIGHT) {
+        setHealth(0);
+    }
+
     Player *player = App::instance().getStage()->getPlayer();
-    if (Entity::checkCollision(&(getTexture()->rect), &(player->getTexture()->rect))) {
+    if (checkCollision(player->getRect())) {
         player->pickUpObject(this);
         setHealth(0);
     }
 }
 
-void Object::move() {
-    setY(getY() + getSpeed());
-    if (getY() > SCREEN_HEIGHT) {
-        setHealth(0);
-    }
-}
 
 void Object::draw() {
     if (animation) {

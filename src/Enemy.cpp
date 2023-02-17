@@ -46,11 +46,11 @@ Enemy::~Enemy() {}
 
 void Enemy::update() {
     // First move the enemy
-    Entity::move();
+    move();
 
     // Check collisions with player
     Player *player = App::instance().getStage()->getPlayer();
-    if (Entity::checkCollision(&(getTexture()->rect), &(player->getTexture()->rect))) {
+    if (checkCollision(player->getRect())) {
         takeDamage(getHealth());
         player->takeDamage(player->getHealth());
     }
