@@ -3,7 +3,7 @@
 
 Enemy::Enemy(int type) : Entity() {
     enemyType = type;
-    reload = 100;
+    reload = 20;
     switch (enemyType) {
         case ENEMYTYPE_COMMON:
         /* Simplest enemy. Only travels in one direction and shoots occasionally. */
@@ -99,7 +99,7 @@ void Enemy::shoot() {
             break;
     }
 
-    reload = rand() % 100 + 100;
+    reload = rand() % 100 + 50;
     App::instance().getStage()->addEntity(bullet);
 }
 

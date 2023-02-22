@@ -75,10 +75,9 @@ SDL_Texture *Draw::addTextureToCache(std::string filename) {
 	if (!texture) {
 		printf("Error: %s\n", IMG_GetError());
 	} else {
+		textureCache.insert(std::pair<std::string, SDL_Texture*>(filename, texture));
 		printf("Done\n");
 	}
-
-	textureCache.insert(std::pair<std::string, SDL_Texture*>(filename, texture));
 
 	return texture;
 }
@@ -151,17 +150,15 @@ void Draw::renderText(const char *text, int x, int y, SDL_Color color, int size,
 }
 
 void Draw::renderUI() {
-	SDL_Color white = {255, 255, 255, 255};
 
-	renderText("SCORE", 10, SCREEN_HEIGHT - 40, white, FONTSIZE_SMALL);
+	renderText("SCORE", 10, SCREEN_HEIGHT - 40, COLOR_WHITE, FONTSIZE_SMALL);
 	Player *player = App::instance().getStage()->getPlayer();
-	renderText(std::to_string(player->getScore()).c_str(), 10, SCREEN_HEIGHT - 24, white);
+	renderText(std::to_string(player->getScore()).c_str(), 10, SCREEN_HEIGHT - 24, COLOR_WHITE);
 
 	blit(loadTexture("lives.png"), 400, SCREEN_HEIGHT - 24);
-	renderText(("x"+(std::to_string(player->getLives()))).c_str(), 428, SCREEN_HEIGHT - 24, white);
+	renderText(("x"+(std::to_string(player->getLives()))).c_str(), 428, SCREEN_HEIGHT - 24, COLOR_WHITE);
 }
 
 void Draw::renderGameOver() {
-	SDL_Color white = {255, 255, 255, 255};
-	renderText("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, white, FONTSIZE_LARGE, true);
+	renderText("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, COLOR_WHITE, FONTSIZE_LARGE, true);
 }

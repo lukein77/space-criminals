@@ -95,6 +95,7 @@ Mix_Chunk *Audio::addSoundToCache(std::string filename) {
         printf("Error: %s\n", Mix_GetError());
     } else {
         audioCache.insert(std::pair<std::string, Mix_Chunk*>(filename, sound));
+        printf("Done\n");
     }
 
     return sound;
