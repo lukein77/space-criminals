@@ -34,23 +34,23 @@ bool App::initSDL() {
     return true;
 }
 
-/* App::doInput() 
+/* App::handleInput() 
  *
  * Processes key input
  */
-void App::doInput() {
+void App::handleInput() {
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
             case SDL_QUIT:
-                state = GAME_EXIT;
+                changeState(GAME_EXIT);
                 break;
             case SDL_KEYDOWN:
-                doKeyDown(&event.key);
+                handleKeyDown(&event.key);
                 break;
             case SDL_KEYUP:
-                doKeyUp(&event.key);
+                handleKeyUp(&event.key);
                 break;
             default:
                 break;
@@ -58,42 +58,44 @@ void App::doInput() {
     }
 }
 
-/* App::doKeyDown
+/* App::handleKeyDown
  * 
  * Processes KEY_DOWN events, mainly player movement
  * 
  * Parameters:
  * SDL_KeyboardEvent *event: the key that is being held down
  */
-void App::doKeyDown(SDL_KeyboardEvent *event) {
-    Player *player = getStage()->getPlayer();
-	if (event->repeat == 0)
-	{
-		switch (event->keysym.scancode) { 
-            case SDL_SCANCODE_UP:
-                player->setMovement(DIRECTION_UP, true);
-                player->setMovement(DIRECTION_DOWN, false);
-                break;
-            case SDL_SCANCODE_DOWN:
-                player->setMovement(DIRECTION_UP, false);
-                player->setMovement(DIRECTION_DOWN, true);
-                break;
-            case SDL_SCANCODE_LEFT:
-                player->setMovement(DIRECTION_LEFT, true);
-                player->setMovement(DIRECTION_RIGHT, false);
-                break;
-            case SDL_SCANCODE_RIGHT:
-                player->setMovement(DIRECTION_LEFT, false);
-                player->setMovement(DIRECTION_RIGHT, true);
-                break;
-            default:
-                break;
-        }
+void App::handleKeyDown(SDL_KeyboardEvent *event) {
+    if (state == GAME_RUNNING) {
+        Player *player = getStage()->getPlayer();
+        if (event->repeat == 0)
+        {
+            switch (event->keysym.scancode) { 
+                case SDL_SCANCODE_UP:
+                    player->setMovement(DIRECTION_UP, true);
+                    player->setMovement(DIRECTION_DOWN, false);
+                    break;
+                case SDL_SCANCODE_DOWN:
+                    player->setMovement(DIRECTION_UP, false);
+                    player->setMovement(DIRECTION_DOWN, true);
+                    break;
+                case SDL_SCANCODE_LEFT:
+                    player->setMovement(DIRECTION_LEFT, true);
+                    player->setMovement(DIRECTION_RIGHT, false);
+                    break;
+                case SDL_SCANCODE_RIGHT:
+                    player->setMovement(DIRECTION_LEFT, false);
+                    player->setMovement(DIRECTION_RIGHT, true);
+                    break;
+                default:
+                    break;
+            }
 
-	}
+        }
+    }
 }
 
-/* App::doKeyUp
+/* App::handleKeyUp
  * 
  * Processes KEY_UP events
  * 
@@ -101,30 +103,53 @@ void App::doKeyDown(SDL_KeyboardEvent *event) {
  * SDL_KeyboardEvent *event: the key that is being released
  * 
  */
-void App::doKeyUp(SDL_KeyboardEvent *event) {
-    Player *player = App::instance().getStage()->getPlayer();
+void App::handleKeyUp(SDL_KeyboardEvent *event) {
 
 	if (event->repeat == 0 && event->keysym.scancode < MAX_KEYBOARD_KEYS)
 	{
 		switch (event->keysym.scancode) { 
             case SDL_SCANCODE_ESCAPE:
-                state = GAME_EXIT;
+                changeState(GAME_EXIT);
+                break;
+            case SDL_SCANCODE_RETURN:
+                if (state == GAME_MAINMENU) {
+                    menu->choose();
+                }
                 break;
             case SDL_SCANCODE_UP:
-                player->setMovement(DIRECTION_UP, false);
+                if (state == GAME_RUNNING) {
+                    Player *player = App::instance().getStage()->getPlayer();
+                    player->setMovement(DIRECTION_UP, false);
+                } else if (state == GAME_MAINMENU) {
+                    menu->selectPrevious();
+                }
                 break;
             case SDL_SCANCODE_DOWN:
-                player->setMovement(DIRECTION_DOWN, false);
+                if (state == GAME_RUNNING) {
+                    Player *player = App::instance().getStage()->getPlayer();
+                    player->setMovement(DIRECTION_DOWN, false);
+                } else if (state == GAME_MAINMENU) {
+                    menu->selectNext();
+                }
                 break;
             case SDL_SCANCODE_LEFT:
-                player->setMovement(DIRECTION_LEFT, false);
+                if (state == GAME_RUNNING) {
+                    Player *player = App::instance().getStage()->getPlayer();
+                    player->setMovement(DIRECTION_LEFT, false);
+                }
                 break;
             case SDL_SCANCODE_RIGHT:
-                player->setMovement(DIRECTION_RIGHT, false);
+                if (state == GAME_RUNNING) {
+                    Player *player = App::instance().getStage()->getPlayer();
+                    player->setMovement(DIRECTION_RIGHT, false);
+                }
                 break;
             case SDL_SCANCODE_LCTRL:
             case SDL_SCANCODE_RCTRL:
-                player->toggleFire();
+                if (state == GAME_RUNNING) {
+                    Player *player = App::instance().getStage()->getPlayer();
+                    player->toggleFire();
+                }
                 break;
             default:
                 break;
@@ -132,15 +157,28 @@ void App::doKeyUp(SDL_KeyboardEvent *event) {
 	}
 }
 
-/* App::setState
+/* App::changeState
  * 
- * Changes the app's current state.
+ * Sets up a new state.
  * 
  * Parameters:
  * int state: new state
  */
-void App::setState(int state) {
-    this->state = state;
+void App::changeState(int newState) {
+    switch (newState) {
+        case GAME_MAINMENU:
+            menu = new MainMenu();
+            break;
+        case GAME_RUNNING:
+            createStage();
+            getStage()->initStage();
+            getAudioManager()->loadMusic("01 - Criminals from Space.mp3");
+            getAudioManager()->playMusic();
+            break;
+        default:
+            break;
+    }
+    this->state = newState;
 }
 
 /* App::createStage()
@@ -150,4 +188,45 @@ void App::setState(int state) {
 void App::createStage() {
     stage = new Stage();
     stage->initStage();
+}
+
+/* App::handleState()
+ *
+ * Handles the app's current state. 
+*/
+void App::handleState() {
+    switch(this->state) {
+        case GAME_RUNNING:
+            getDrawingManager()->clearScene();
+            
+            handleInput();
+            
+            getStage()->updateAndDraw();
+
+            getDrawingManager()->renderUI();
+            getDrawingManager()->renderScene();
+            break;
+        case GAME_MAINMENU:
+            getDrawingManager()->clearScene();
+
+            getDrawingManager()->renderMenu(menu);
+            handleInput();
+
+            getDrawingManager()->renderScene();
+            break;
+            
+        case GAME_GAMEOVER:
+            getDrawingManager()->clearScene();
+            
+            handleInput();
+            
+            getStage()->updateAndDraw();
+            getStage()->drawGameOver();
+
+            getDrawingManager()->renderUI();
+            getDrawingManager()->renderScene();
+            break;
+        default:
+            break;
+    }
 }

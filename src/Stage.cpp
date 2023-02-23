@@ -60,9 +60,6 @@ void Stage::updateAndDraw() {
 
     drawEntities();
     drawAnimations();
-    if (App::instance().getState() == GAME_GAMEOVER) {
-        drawGameOver();
-    }
     
     updateAnimations();
 }
@@ -132,11 +129,11 @@ void Stage::drawGameOver() {
     if (SDL_GetTicks() - time < 3000) {
         App::instance().getDrawingManager()->renderGameOver();
     } else {
-        App::instance().setState(GAME_EXIT);
+        App::instance().changeState(GAME_EXIT);
     }
 }
 
 void Stage::gameOver(long time) {
     this->time = time;
-    App::instance().setState(GAME_GAMEOVER);
+    App::instance().changeState(GAME_GAMEOVER);
 }

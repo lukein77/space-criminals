@@ -7,28 +7,15 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    app.getAudioManager()->loadMusic("01 - Criminals from Space.mp3");
-
-    app.setState(GAME_RUNNING);
-
-    app.createStage();
-    app.getStage()->initStage();
-
-    app.getAudioManager()->playMusic();
-
-    Player *player = app.getStage()->getPlayer();
+    app.changeState(GAME_MAINMENU);
+    
+    //Player *player = app.getStage()->getPlayer();
 
     while (app.getState() != GAME_EXIT) {
 
+        app.handleState();
+
         // long time = SDL_GetTicks();
-
-        app.getDrawingManager()->clearScene();
-        
-        app.doInput();
-        
-        app.getStage()->updateAndDraw();
-
-        app.getDrawingManager()->renderScene();
 
         /*
         long timePassed = SDL_GetTicks() - time;

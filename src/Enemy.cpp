@@ -50,7 +50,7 @@ void Enemy::update() {
 
     // Check collisions with player
     Player *player = App::instance().getStage()->getPlayer();
-    if (checkCollision(player->getRect())) {
+    if (checkCollision(player->getRect()) && (!player->isImmune()) && (player->isAlive())) {
         takeDamage(getHealth());
         player->takeDamage(player->getHealth());
     }

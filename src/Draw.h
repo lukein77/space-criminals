@@ -3,7 +3,10 @@
 
 #include "common.h"
 #include "App.h"
+#include "Menu.h"
 #include <map>
+
+class Menu;
 
 typedef struct {
     std::string filename;
@@ -37,6 +40,7 @@ class Draw {
         void renderText(const char *text, int x, int y, SDL_Color color, int size=FONTSIZE_DEFAULT, bool centered=false);
         void renderUI();
         void renderGameOver();
+        void renderMenu(Menu *menu);
 };
 
 #endif

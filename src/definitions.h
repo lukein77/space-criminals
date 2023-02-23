@@ -5,6 +5,7 @@
 #define SCREEN_HEIGHT 720
 
 #define MAX_KEYBOARD_KEYS 350
+#define MAX_MENU_OPTIONS 10
 #define TEXTURE_CACHE_SIZE 4
 
 #define PLAYER_SPEED 6
@@ -21,7 +22,12 @@
 
 #define BACKGROUND_SPEED 4
 
+#define COLOR_WHITE         {255, 255, 255, 255}
+#define COLOR_RED           {255, 0, 0, 255}
+#define COLOR_MENUSELECT    {255, 230, 60, 255}
+
 enum {
+    GAME_MAINMENU,
     GAME_RUNNING,
     GAME_PAUSED,
     GAME_GAMEOVER,
@@ -56,7 +62,8 @@ enum {
 enum {
     FONTSIZE_DEFAULT = 0,
     FONTSIZE_LARGE,
-    FONTSIZE_SMALL
+    FONTSIZE_SMALL,
+    FONTSIZE_MENU
 };
 
 typedef struct {
