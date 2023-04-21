@@ -20,7 +20,7 @@ void Stage::initStage() {
 void Stage::initPlayer() {
     player = new Player();
     player->setPos(SCREEN_WIDTH / 2 - player->getW() / 2, SCREEN_HEIGHT - player->getH() * 2);
-    entities.push_back(player);
+    //entities.push_back(player);
 }
 
 void Stage::loadBackground() {
@@ -64,7 +64,11 @@ void Stage::updateAndDraw() {
     updateAnimations();
 }
 
-void Stage::updateEntities() {
+void Stage::updateEntities() {;
+    // First update player
+    player->update();
+
+    // Then update list of entities
     std::list <Entity*> :: iterator it = entities.begin();
     while (it != entities.end()) {
         (*it)->update();
@@ -107,6 +111,10 @@ void Stage::spawnEnemy(int enemyType) {
 void Stage::drawEntities() {
 
     App::instance().getDrawingManager()->blit(background);
+
+    if (player->isAlive()) {
+        player->draw();
+    }
 
     std::list <Entity*> :: iterator it;
     for (it = entities.begin(); it != entities.end(); it++) {

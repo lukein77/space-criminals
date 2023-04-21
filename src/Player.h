@@ -34,7 +34,7 @@ class Player : public Entity {
         void die();
         unsigned int getScore() { return score; }
         int getLives() { return lives; }
-        bool isAlive() { return !(getHealth() == 0 && lives == 0); }
+        bool isAlive() { return !(getHealth() == 0 && lives <= 0); }
         bool isImmune() { return immune; }
 };
 
