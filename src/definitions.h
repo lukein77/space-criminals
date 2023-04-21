@@ -20,7 +20,7 @@
 #define BULLETSPEED_PLAYER 16
 #define BULLETSPEED_ENEMY 10
 
-#define BACKGROUND_SPEED 4
+#define BACKGROUND_SPEED 3
 
 #define COLOR_WHITE         {255, 255, 255, 255}
 #define COLOR_RED           {255, 0, 0, 255}

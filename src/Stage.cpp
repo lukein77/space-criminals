@@ -129,7 +129,7 @@ void Stage::drawGameOver() {
     if (SDL_GetTicks() - time < 3000) {
         App::instance().getDrawingManager()->renderGameOver();
     } else {
-        App::instance().changeState(GAME_EXIT);
+        App::instance().changeState(GAME_MAINMENU);
     }
 }
 

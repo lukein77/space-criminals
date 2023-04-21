@@ -168,9 +168,9 @@ void Draw::renderMenu(Menu *menu) {
 	blit(menu->getBackground(), 0, 0);	// ver si funca sin x y
 	for (int i = 0; i < menu->getNumOptions(); i++) {
 		if (i == menu->getCurrentOption()) {
-			renderText(menu->getLabel(i), SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.66 + i*48, COLOR_MENUSELECT, FONTSIZE_MENU, true);
+			renderText(menu->getLabel(i).c_str(), SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.66 + i*48, COLOR_MENUSELECT, FONTSIZE_MENU, true);
 		} else {
-			renderText(menu->getLabel(i), SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.66 + i*48, COLOR_WHITE, FONTSIZE_MENU, true);
+			renderText(menu->getLabel(i).c_str(), SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.66 + i*48, COLOR_WHITE, FONTSIZE_MENU, true);
 		}
 	}
 	//blit(loadTexture("cursor.png"), SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2 + menu->getCurrentOption() * 48);

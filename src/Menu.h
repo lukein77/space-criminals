@@ -6,17 +6,17 @@
 
 class Menu {
     protected:
-        int currentOption;
+        unsigned short currentOption;
         int numOptions;
-        char *labels[MAX_MENU_OPTIONS];
+        std::string labels[MAX_MENU_OPTIONS];
         Texture background;
     public:
         virtual void choose() = 0;
-        void selectPrevious() { currentOption = (currentOption - 1) % numOptions; }
-        void selectNext() { currentOption = (currentOption + 1) % numOptions; }
+        void selectPrevious();
+        void selectNext();
         int getCurrentOption() { return currentOption; }
         int getNumOptions() { return numOptions; }
-        char *getLabel(int option) { return labels[option]; }
+        std::string getLabel(int option) { return labels[option]; }
         Texture *getBackground() { return &background; }
 };
 

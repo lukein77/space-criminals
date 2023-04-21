@@ -122,6 +122,7 @@ void App::handleKeyUp(SDL_KeyboardEvent *event) {
                     player->setMovement(DIRECTION_UP, false);
                 } else if (state == GAME_MAINMENU) {
                     menu->selectPrevious();
+                    printf("%d\n", menu->getCurrentOption());
                 }
                 break;
             case SDL_SCANCODE_DOWN:
@@ -130,6 +131,7 @@ void App::handleKeyUp(SDL_KeyboardEvent *event) {
                     player->setMovement(DIRECTION_DOWN, false);
                 } else if (state == GAME_MAINMENU) {
                     menu->selectNext();
+                    printf("%d\n", menu->getCurrentOption());
                 }
                 break;
             case SDL_SCANCODE_LEFT:
@@ -168,6 +170,8 @@ void App::changeState(int newState) {
     switch (newState) {
         case GAME_MAINMENU:
             menu = new MainMenu();
+            getAudioManager()->loadMusic("02 - Space Delinquents.mp3");
+            getAudioManager()->playMusic();
             break;
         case GAME_RUNNING:
             createStage();
